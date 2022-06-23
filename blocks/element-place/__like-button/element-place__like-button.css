@@ -1,0 +1,18 @@
+.element-place__like-button {
+  height: 19px;
+  width: 22px;
+  background-image: url(../../../images/heart.svg);
+  background-position: cover;
+  border: 0;
+  align-self: center;
+  background-color: #fff;
+}
+
+.element-place__like-button:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.element-place__like-button:active {
+  background-image: url(../../../images/heart_active.svg);
+}
