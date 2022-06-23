@@ -5,3 +5,10 @@
   padding: 0;
   margin: 0;
 }
+
+@media screen and (max-width:650px) {
+  .profile-info__profession {
+    line-height: 17px;
+  font-size: 14px;
+  }
+}
