@@ -17,6 +17,7 @@
 
 @media screen and (max-width:650px) {
   .elements {  
+  margin: 36px auto 0;
   grid-template-columns: repeat(1, 282px);
   grid-template-rows: repeat(6, 361px);
 }
