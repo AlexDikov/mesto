@@ -22,7 +22,11 @@ function closePopup() {
 }
 
 closeButton.addEventListener('click', closePopup);
-formElement.addEventListener('submit', closePopup);
+
+function saveChanges() {
+  popup.classList.remove('popup_opened');
+}
+formElement.addEventListener('submit', saveChanges);
 
 nameInput.value = profileName.textContent;
 jobInput.value = profileJob.textContent;
