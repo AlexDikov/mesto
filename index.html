@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
   <link rel="stylesheet" href="./pages/index.css">
-
 </head>
 <body class="page">
   <header class="header">
@@ -14,16 +13,16 @@
     <div class="header__line"></div>
   </header>
   <main class="content">
-    <section class="profile content__section">
+    <section class="profile">
       <img class="profile__avatar" src="./images/avatar.jpg" alt="аватар">
-      <div class="profile-info">
-        <p class="profile-info__name">Жак-Ив Кусто</p>
-        <button class="profile-info__edit-button"></button>
-        <p class="profile-info__profession">Исследователь океана</p>
+      <div class="profile__info">
+        <h1 class="profile__name">Жак-Ив Кусто</h1>
+        <button class="profile__edit-button"></button>
+        <p class="profile__job">Исследователь океана</p>
       </div>
       <button class="profile__add-button"></button>
     </section>
-    <section class="elements content__section">
+    <section class="elements">
       <div class="element">
         <img class="element__image" src="./images/photo-grid-baikal.jpg" alt="фото байкал">
         <div class="element-place">
@@ -62,16 +61,30 @@
       <div class="element">
         <img class="element__image" src="./images/cover-trains.jpg" alt="фото поезд">
         <div class="element-place">
-          <p class="element-place__name">Бескудниково</p>
+          <p class="element-place__name">Станция Бескудниково</p>
           <button class="element-place__like-button"></button>
         </div>
       </div>
     </section> 
   </main>
   <footer class="footer">
-    <p class="footer__copyright">&#169; 2022 Mesto Russia</p>
+    <p class="footer__copyright">&#169; 2022 Mesto Russia</p> 
   </footer>
+  <section class="popup">
+    <div class="popup__container">
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form class="popup__form" action="">
+        <input class="popup__name-form" type="text">
+        <div class="popup__line"></div>
+        <input class="popup__job-form" type="text">
+        <div class="popup__line"></div>
+        <input class="popup__save-button" type="submit" value="Сохранить">
+      </form> 
+      <button class="popup__close-button"></button>
+    </div>
+  </section>
 </body>
+<script src="./scripts/index.js"></script>
 </html>
 
 
