@@ -8,12 +8,12 @@
 
 @media screen and (max-width:950px) {
   .header {  
-  max-width: 578px;
-}
+    max-width: 578px;
+  }
 }
 
 @media screen and (max-width:650px) {
   .header {  
-  max-width: 282px;
-}
+    max-width: 282px;
+  }
 }

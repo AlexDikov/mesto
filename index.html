@@ -1,88 +1,93 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
   <link rel="stylesheet" href="./pages/index.css">
 </head>
+
 <body class="page">
   <header class="header">
-    <img class="header__logo" src="./images/logo.png" alt="логотип">
+    <img class="header__logo" src="./images/logo.svg" alt="логотип">
     <div class="header__line"></div>
   </header>
   <main class="content">
     <section class="profile">
-      <img class="profile__avatar" src="./images/avatar.jpg" alt="аватар">
-      <div class="profile__info">
-        <h1 class="profile__name">Жак-Ив Кусто</h1>
-        <button class="profile__edit-button"></button>
-        <p class="profile__job">Исследователь океана</p>
+      <div class="profile__container">
+        <img class="profile__avatar" src="./images/avatar.jpg" alt="аватар">
+        <div class="profile__info">
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <button class="profile__edit-button" type="button"></button>
+          <p class="profile__job">Исследователь океана</p>
+        </div>
       </div>
-      <button class="profile__add-button"></button>
+      <button class="profile__add-button" type="button"></button>
     </section>
     <section class="elements">
       <div class="element">
         <img class="element__image" src="./images/photo-grid-baikal.jpg" alt="фото байкал">
         <div class="element-place">
           <p class="element-place__name">Байкал</p>
-          <button class="element-place__like-button"></button>
+          <button class="element-place__like-button element-place__like-button_active" type="button"></button>
         </div>
       </div>
       <div class="element">
         <img class="element__image" src="./images/photo-grid-elbrus.jpg" alt="фото эльбрус">
         <div class="element-place">
           <p class="element-place__name">Эльбрус</p>
-          <button class="element-place__like-button"></button>
+          <button class="element-place__like-button element-place__like-button_active" type="button"></button>
         </div>
       </div>
       <div class="element">
         <img class="element__image" src="./images/photo-grid-kamchatka-2.jpg" alt="фото камчатка">
         <div class="element-place">
           <p class="element-place__name">Камчатка</p>
-          <button class="element-place__like-button"></button>
+          <button class="element-place__like-button element-place__like-button_active" type="button"></button>
         </div>
       </div>
       <div class="element">
         <img class="element__image" src="./images/place-karelia.jpg" alt="фото карелия">
         <div class="element-place">
           <p class="element-place__name">Карелия</p>
-          <button class="element-place__like-button"></button>
+          <button class="element-place__like-button element-place__like-button_active" type="button"></button>
         </div>
       </div>
       <div class="element">
         <img class="element__image" src="./images/place-altai.jpg" alt="фото алтай">
         <div class="element-place">
           <p class="element-place__name">Алтай</p>
-          <button class="element-place__like-button"></button>
+          <button class="element-place__like-button element-place__like-button_active" type="button"></button>
         </div>
       </div>
       <div class="element">
         <img class="element__image" src="./images/cover-trains.jpg" alt="фото поезд">
         <div class="element-place">
           <p class="element-place__name">Станция Бескудниково</p>
-          <button class="element-place__like-button"></button>
+          <button class="element-place__like-button element-place__like-button_active" type="button"></button>
         </div>
       </div>
-    </section> 
+    </section>
   </main>
   <footer class="footer">
-    <p class="footer__copyright">&#169; 2022 Mesto Russia</p> 
+    <p class="footer__copyright">&#169; 2022 Mesto Russia</p>
   </footer>
   <section class="popup">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form">
-        <input class="popup__name-form" type="text">
+        <input class="popup__name-form" type="text" name="name">
         <div class="popup__line"></div>
-        <input class="popup__job-form" type="text">
+        <input class="popup__job-form" type="text" name="job">
         <div class="popup__line"></div>
         <input class="popup__save-button" type="submit" value="Сохранить">
-      </form> 
+      </form>
       <button class="popup__close-button"></button>
     </div>
   </section>
-<script src="./scripts/index.js"></script>  
+  <script src="./scripts/index.js"></script>
 </body>
+
 </html>

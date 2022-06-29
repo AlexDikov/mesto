@@ -16,7 +16,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width:650px) {
+@media screen and (max-width:950px) {
   .profile__edit-button {
     height: 18px;
     width: 18px;

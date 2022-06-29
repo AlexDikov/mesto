@@ -12,7 +12,3 @@
   opacity: 0.5;
   cursor: pointer;
 }
-
-.element-place__like-button:active {
-  background-image: url(../../../images/heart_active.svg);
-}
