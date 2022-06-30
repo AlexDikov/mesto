@@ -3,7 +3,7 @@
   grid-template-columns: max-content 24px;
   grid-template-rows: max-content;
   column-gap: 18px;
-  row-gap: 16px;
+  row-gap: 8px;
   padding: 0;
   margin-top: 22px;
   margin-left: 30px;
@@ -13,7 +13,7 @@
   .profile__info {
     grid-template-columns: 189px 24px;
     column-gap: 10px;
-    row-gap: 14px;
-    margin: 22px 0 0 44px;
+    row-gap: 8px;
+    margin: 26px 0 0 45px;
   }
 }

@@ -5,13 +5,13 @@
 }
 
 @media screen and (max-width:950px) {
-  .footer {  
+  .footer {
     max-width: 578px;
   }
 }
 
 @media screen and (max-width:650px) {
-  .footer {  
+  .footer {
     margin: 48px auto 0;
     max-width: 282px;
   }

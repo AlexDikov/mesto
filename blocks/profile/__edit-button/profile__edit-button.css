@@ -5,14 +5,16 @@
   margin-bottom: 8px;
   background-color: #000;
   border: 1px solid #fff;
-  background-image: url(../../../images/pencil.png);
+  background-image: url(../../../images/pencil.svg);
   background-size: 10px;
   background-position: center;
   background-repeat: no-repeat;
+  transition-property: opacity;
+  transition-duration: 0.5s;
 }
 
 .profile__edit-button:hover {
-  opacity: 0.5;
+  opacity: 0.6;
   cursor: pointer;
 }
 

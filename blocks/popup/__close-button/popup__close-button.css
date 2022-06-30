@@ -8,6 +8,8 @@
   background-color: transparent;
   background-size: cover;
   border: none;
+  transition-property: opacity;
+  transition-duration: 0.5s;
 }
 
 .popup__close-button:hover {
