@@ -22,5 +22,7 @@
     width: 238px;
     height: 46px;
     margin: 0 0 25px 22px;
+    line-height: 17px;
+    font-size: 14px;
   }
 }

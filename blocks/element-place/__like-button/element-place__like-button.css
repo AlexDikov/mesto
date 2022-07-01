@@ -2,10 +2,10 @@
   height: 19px;
   width: 22px;
   background-image: url(../../../images/heart.svg);
-  background-position: cover;
-  border: 0;
+  border: none;
   align-self: center;
   background-color: #fff;
+  padding: 0;
 }
 
 .element-place__like-button:hover {
