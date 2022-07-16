@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mesto</title>
     <link rel="stylesheet" href="./pages/index.css">
+    <script defer src="./scripts/cards.js"></script>
+    <script defer src="./scripts/index.js"></script>
   </head>
 
   <body class="page">
@@ -44,8 +46,8 @@
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="popup__form" name="profile-info">
-          <input class="popup__input popup__input_field_name" type="text" name="name">
-          <input class="popup__input popup__input_field_job" type="text" name="job">
+          <input class="popup__input popup__input_field_name" type="text" name="name" required="required">
+          <input class="popup__input popup__input_field_job" type="text" name="job"required="required">
           <button class="popup__save-button" type="submit">Сохранить</button>
         </form>
         <button class="popup__close-button" type="button" aria-label="закрыть"></button>
@@ -55,8 +57,8 @@
       <div class="popup__container">
         <h2 class="popup__title">Новое место</h2>
         <form class="popup__form" name="profile-info">
-          <input class="popup__input popup__input_field_name" type="text" name="name" placeholder="Название">
-          <input class="popup__input popup__input_field_job" type="text" name="job" placeholder="Ссылка на картинку">
+          <input class="popup__input popup__input_field_name" type="text" name="name" placeholder="Название" required="required">
+          <input class="popup__input popup__input_field_job" type="url" name="job" placeholder="Ссылка на картинку" required="required">
           <button class="popup__save-button" type="submit">Сохранить</button>
         </form>
         <button class="popup__close-button" type="button" aria-label="закрыть"></button>
@@ -69,6 +71,5 @@
         <button class="popup__close-button" type="button" aria-label="закрыть"></button>
       </figure>
     </div>
-    <script src="./scripts/index.js"></script>
   </body>
 </html>
