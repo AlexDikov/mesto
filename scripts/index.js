@@ -13,19 +13,19 @@ const popupPic = popupZoomPic.querySelector('.popup__picture');
 const popupPicName = popupZoomPic.querySelector('.popup__picture-cap');
 const popupZoomPicCloseButton = popupZoomPic.querySelector('.popup__close-button');
 const profileEditButton = document.querySelector('.profile__edit-button');
-const profileAddButton = document.querySelector('.profile__add-button')
+const ProfileCardEditButton = document.querySelector('.profile__add-button')
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 const elements = document.querySelector('.elements');
 const templateCard = document.querySelector('#card').content;
 
 //--------------------functions 
-function openPopup(item) {
-  item.classList.add('popup_opened');
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
 }
 
-function closePopup(item) {
-  item.classList.remove('popup_opened');
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
 }
 
 function openPopupEditProfile() {
@@ -68,44 +68,12 @@ function submitPorfileForm(evt) {
   closePopupEditProfile();
 };
 
-function submitCardForm(evt) {
-  evt.preventDefault();
-
+function createCard({link, name}) {
   const newCard = templateCard.querySelector('.element').cloneNode(true);
   const cardImage = newCard.querySelector('.element__image');
-  cardImage.src = picInput.value;
-  cardImage.alt = placeInput.value;
-  newCard.querySelector('.element-place__name').textContent = placeInput.value;
-  newCard.querySelector('.element-place__like-button').addEventListener('click', likePic);
-  newCard.querySelector('.element__delete-button').addEventListener('click', deleteCard);
-  cardImage.addEventListener('click', zoomPic);
-
-  elements.prepend(newCard);
-
-  function likePic(evt) {
-    evt.target.classList.toggle('element-place__like-button_active');
-  };
-
-  function deleteCard() {
-    newCard.remove();
-  };
-
-  function zoomPic() {
-    popupPic.src = picInput.value;
-    popupPic.alt = placeInput.value;;
-    popupPicName.textContent = placeInput.value;;
-    openPopupZoomPic();
-  };
-
-  closePopupAddCard();
-};
-
-function createCard(cardData) {
-  const newCard = templateCard.querySelector('.element').cloneNode(true);
-  const cardImage = newCard.querySelector('.element__image');
-  cardImage.src = cardData.link;
-  cardImage.alt = cardData.name;
-  newCard.querySelector('.element-place__name').textContent = cardData.name;
+  cardImage.src = link;
+  cardImage.alt = name;
+  newCard.querySelector('.element-place__name').textContent = name;
   newCard.querySelector('.element-place__like-button').addEventListener('click', likePic);
   newCard.querySelector('.element__delete-button').addEventListener('click', deleteCard);
   cardImage.addEventListener('click', zoomPic);
@@ -119,16 +87,26 @@ function createCard(cardData) {
   };
 
   function zoomPic() {
-    popupPic.src = cardData.link;
-    popupPic.alt = cardData.name;
-    popupPicName.textContent = cardData.name;
+    popupPic.src = link;
+    popupPic.alt = name;
+    popupPicName.textContent = name;
     openPopupZoomPic();
   };
   return newCard;
 };
 
-function addCard(cardData) {
-  elements.prepend(createCard(cardData));
+function submitCardForm(evt) {
+  evt.preventDefault();
+
+  createCard({link: picInput.value,name: placeInput.value});
+
+  addCard({link: picInput.value,name: placeInput.value});
+
+  closePopupAddCard();
+};
+
+function addCard(link, name) {
+  elements.prepend(createCard(link, name));
 };
 
 const reversedCards = initialCards.reverse();
@@ -140,6 +118,6 @@ formEditProfile.addEventListener('submit', submitPorfileForm);
 formNewCard.addEventListener('submit', submitCardForm);
 profileEditButton.addEventListener('click', openPopupEditProfile);
 popupEditProfileCloseButton.addEventListener('click', closePopupEditProfile);
-profileAddButton.addEventListener('click', openPopupAddCard);
+ProfileCardEditButton.addEventListener('click', openPopupAddCard);
 popupAddCardCloseButton.addEventListener('click', closePopupAddCard);
 popupZoomPicCloseButton.addEventListener('click', closePopupZoomPic); 
