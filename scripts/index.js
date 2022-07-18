@@ -68,12 +68,12 @@ function submitPorfileForm(evt) {
   closePopupEditProfile();
 };
 
-function createCard({link, name}) {
+function createCard(cardData) {
   const newCard = templateCard.querySelector('.element').cloneNode(true);
   const cardImage = newCard.querySelector('.element__image');
-  cardImage.src = link;
-  cardImage.alt = name;
-  newCard.querySelector('.element-place__name').textContent = name;
+  cardImage.src = cardData.link;
+  cardImage.alt = cardData.name;
+  newCard.querySelector('.element-place__name').textContent = cardData.name;
   newCard.querySelector('.element-place__like-button').addEventListener('click', likePic);
   newCard.querySelector('.element__delete-button').addEventListener('click', deleteCard);
   cardImage.addEventListener('click', zoomPic);
@@ -87,9 +87,9 @@ function createCard({link, name}) {
   };
 
   function zoomPic() {
-    popupPic.src = link;
-    popupPic.alt = name;
-    popupPicName.textContent = name;
+    popupPic.src = cardData.link;
+    popupPic.alt = cardData.name;
+    popupPicName.textContent = cardData.name;
     openPopupZoomPic();
   };
   return newCard;
@@ -97,16 +97,19 @@ function createCard({link, name}) {
 
 function submitCardForm(evt) {
   evt.preventDefault();
+  
+  const cardData = {
+    link: picInput.value,
+    name: placeInput.value
+  };
 
-  createCard({link: picInput.value,name: placeInput.value});
-
-  addCard({link: picInput.value,name: placeInput.value});
+  addCard(cardData);
 
   closePopupAddCard();
 };
 
-function addCard(link, name) {
-  elements.prepend(createCard(link, name));
+function addCard(cardData) {
+  elements.prepend(createCard(cardData));
 };
 
 const reversedCards = initialCards.reverse();
