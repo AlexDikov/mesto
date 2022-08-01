@@ -32,7 +32,14 @@ function openPopupEditProfile() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
 
+
+
   openPopup(popupEditProfile);
+  clearPopup();
+
+  const button = popupEditProfile.querySelector('.popup__save-button');
+  button.removeAttribute('disabled');
+  button.classList.remove('popup__save-button_inactive');
 };
 
 function closePopupEditProfile() {
@@ -43,6 +50,12 @@ function openPopupAddCard() {
   formNewCard.reset();
 
   openPopup(popupAddCard);
+
+  clearPopup();
+
+  const button = popupAddCard.querySelector('.popup__save-button');
+  button.setAttribute('disabled', true);
+  button.classList.add('popup__save-button_inactive');
 };
 
 function closePopupAddCard() {
@@ -52,7 +65,6 @@ function closePopupAddCard() {
 function openPopupZoomPic() {
   openPopup(popupZoomPic);
 };
-
 
 
 function closePopupZoomPic() {
@@ -97,7 +109,7 @@ function createCard(cardData) {
 
 function submitCardForm(evt) {
   evt.preventDefault();
-  
+
   const cardData = {
     link: picInput.value,
     name: placeInput.value
@@ -123,4 +135,12 @@ profileEditButton.addEventListener('click', openPopupEditProfile);
 popupEditProfileCloseButton.addEventListener('click', closePopupEditProfile);
 ProfileCardEditButton.addEventListener('click', openPopupAddCard);
 popupAddCardCloseButton.addEventListener('click', closePopupAddCard);
-popupZoomPicCloseButton.addEventListener('click', closePopupZoomPic); 
+popupZoomPicCloseButton.addEventListener('click', closePopupZoomPic);
+
+document.addEventListener('keydown', (evt) => {
+  if (evt.key === 'Escape') {
+    closePopupEditProfile();
+    closePopupAddCard();
+    closePopupZoomPic()
+  };
+}); 
