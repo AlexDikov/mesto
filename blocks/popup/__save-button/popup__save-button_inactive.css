@@ -5,6 +5,6 @@
   opacity: 0.2;
 }
 
-.popup__save-button_active:hover {
-  opacity: 0.2;
+.popup__save-button_inactive:hover {
+  cursor: default;
 }

@@ -1,7 +1,8 @@
-const formNew = {
+const validationConfig = {
   form: '.popup__form',
   button: '.popup__save-button',
-  buttonInactive: 'popup__save-button_inactive'
+  buttonInactive: 'popup__save-button_inactive',
+  fieldInvalid: 'popup__input_invalid'
 };
 
 function enableValidation(config) {
@@ -16,19 +17,19 @@ function handlerFormInput(event, config) {
   const input = event.target;
   const form = event.currentTarget;
 
-  toggleFieldError(input);
+  toggleFieldError(input, config);
   setSaveButtonState(form, config);
 };
 
 
-function toggleFieldError(input) {
+function toggleFieldError(input, config) {
   const span = input.nextElementSibling;
   span.textContent = input.validationMessage;
 
   if (span.textContent !== '') {
-    input.classList.add('popup__input_invalid')
+    input.classList.add(config.fieldInvalid)
   } else {
-    input.classList.remove('popup__input_invalid')
+    input.classList.remove(config.fieldInvalid)
   }
 };
 
@@ -46,14 +47,13 @@ function setSaveButtonState(form, config) {
   }
 }
 
-function clearPopup() {
+function clearPopup(config) {
   const inputList = Array.from(document.querySelectorAll('.popup__input'));
 
   inputList.forEach((input) => {
     const span = input.nextElementSibling;
     span.textContent = '';
-    input.classList.remove('popup__input_invalid');
-
+    input.classList.remove(config.fieldInvalid);
   })
 }
 
@@ -67,4 +67,4 @@ popups.forEach((popup) => {
   })
 })
 
-enableValidation(formNew);
+enableValidation(validationConfig);

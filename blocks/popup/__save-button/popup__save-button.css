@@ -10,6 +10,7 @@
   color: #fff;
   transition-property: opacity;
   transition-duration: 0.5s;
+  position: relative;
 }
 
 .popup__save-button:hover {
