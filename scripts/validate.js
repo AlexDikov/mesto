@@ -57,14 +57,4 @@ function clearPopup(config) {
   })
 }
 
-const popups = document.querySelectorAll('.popup')
-
-popups.forEach((popup) => {
-  popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains('popup_opened')) {
-      closePopup(popup)
-    }
-  })
-})
-
 enableValidation(validationConfig);

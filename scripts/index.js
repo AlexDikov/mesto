@@ -18,7 +18,6 @@ const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 const elements = document.querySelector('.elements');
 const templateCard = document.querySelector('#card').content;
-let popupActive = null;
 
 //--------------------functions 
 function openPopup(popup) {
@@ -32,10 +31,13 @@ function closePopup(popup) {
 }
 
 function handleEscClose(evt) {
+  const popupActive = document.querySelector('.popup_opened');
   if (evt.key === 'Escape') {
-    closePopupActive()
+    closePopup(popupActive)
   }
 };
+
+
 
 function openPopupEditProfile() {
   nameInput.value = profileName.textContent;
@@ -46,12 +48,10 @@ function openPopupEditProfile() {
   clearPopup(validationConfig);
 
   activateButton(popupEditProfile);
-
-  popupActive = popupEditProfile;
 };
 
-function closePopupActive() {
-  closePopup(popupActive);
+function closePopupEditProfile() {
+  closePopup(popupEditProfile);
 };
 
 function openPopupAddCard() {
@@ -62,8 +62,10 @@ function openPopupAddCard() {
   clearPopup(validationConfig);
 
   desableButton(popupAddCard);
+};
 
-  popupActive = popupAddCard;
+function closeAddCard() {
+  closePopup(popupAddCard);
 };
 
 function activateButton(popup) {
@@ -80,8 +82,10 @@ function desableButton(popup) {
 
 function openPopupZoomPic() {
   openPopup(popupZoomPic);
+};
 
-  popupActive = popupZoomPic;
+function closePopupZoomPic() {
+  closePopup(popupZoomPic);
 };
 
 function submitPorfileForm(evt) {
@@ -90,7 +94,7 @@ function submitPorfileForm(evt) {
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
 
-  closePopupActive();
+  closePopup(popupEditProfile);
 };
 
 function createCard(cardData) {
@@ -130,12 +134,22 @@ function submitCardForm(evt) {
 
   addCard(cardData);
 
-  closePopupActive();
+  closePopup(popupAddCard);
 };
 
 function addCard(cardData) {
   elements.prepend(createCard(cardData));
 };
+
+const popups = document.querySelectorAll('.popup')
+
+popups.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+      closePopup(popup)
+    }
+  })
+})
 
 const reversedCards = initialCards.reverse();
 reversedCards.forEach(addCard);
@@ -145,7 +159,7 @@ reversedCards.forEach(addCard);
 formEditProfile.addEventListener('submit', submitPorfileForm);
 formNewCard.addEventListener('submit', submitCardForm);
 profileEditButton.addEventListener('click', openPopupEditProfile);
-popupEditProfileCloseButton.addEventListener('click', closePopupActive);
+popupEditProfileCloseButton.addEventListener('click', closePopupEditProfile);
 ProfileCardEditButton.addEventListener('click', openPopupAddCard);
-popupAddCardCloseButton.addEventListener('click', closePopupActive);
-popupZoomPicCloseButton.addEventListener('click', closePopupActive);
+popupAddCardCloseButton.addEventListener('click', closeAddCard);
+popupZoomPicCloseButton.addEventListener('click', closePopupZoomPic);
