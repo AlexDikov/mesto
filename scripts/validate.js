@@ -1,3 +1,4 @@
+//селекторы
 const validationConfig = {
   form: '.popup__form',
   button: '.popup__save-button',
@@ -5,6 +6,7 @@ const validationConfig = {
   fieldInvalid: 'popup__input_invalid'
 };
 
+//нахождение форм и навешивание слушателя
 function enableValidation(config) {
   const formList = Array.from(document.querySelectorAll(config.form));
 
@@ -13,6 +15,7 @@ function enableValidation(config) {
   })
 };
 
+//обработчик ввода данных
 function handlerFormInput(event, config) {
   const input = event.target;
   const form = event.currentTarget;
@@ -21,7 +24,7 @@ function handlerFormInput(event, config) {
   setSaveButtonState(form, config);
 };
 
-
+//выведение текста ошибки
 function toggleFieldError(input, config) {
   const span = input.nextElementSibling;
   span.textContent = input.validationMessage;
@@ -33,6 +36,7 @@ function toggleFieldError(input, config) {
   }
 };
 
+//включение-выключение кнопки отправки при валидации
 function setSaveButtonState(form, config) {
   const button = form.querySelector(config.button);
 
@@ -47,6 +51,7 @@ function setSaveButtonState(form, config) {
   }
 }
 
+//очистка попапа
 function clearPopup(config) {
   const inputList = Array.from(document.querySelectorAll('.popup__input'));
 
