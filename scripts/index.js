@@ -197,8 +197,8 @@ function disableButton(popup) {
 const profileFormValidator = new FormValidator(validationData, '#profile');
 profileFormValidator.enableValidation();
 
-const cardFormValidator = new FormValidator(validationData, '#card');
-cardFormValidator.enableValidation();
+//const cardFormValidator = new FormValidator(validationData, '#card');
+//cardFormValidator.enableValidation();
 
 //--------------------слушатели 
 
