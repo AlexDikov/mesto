@@ -138,7 +138,7 @@ function openPopupEditProfile() {
 
   openPopup(popupEditProfile);
 
-  clearPopup(validationConfig);
+  //clearPopup(validationConfig);
 
   activateButton(popupEditProfile);
 };
@@ -153,7 +153,7 @@ function openPopupAddCard() {
 
   openPopup(popupAddCard);
 
-  clearPopup(validationConfig);
+  //clearPopup(validationConfig);
 
   disableButton(popupAddCard);
 };
