@@ -1,67 +1,73 @@
 export default class FormValidator {
-  constructor (validationData, formSelector) {
-    this._form = validationData.form;
+  constructor (validationData, formDomElement) {
     this._input = validationData.input;
-    this._button = validationData.button; 
     this._buttonInactive = validationData.buttonInactive; 
     this._fieldInvalid = validationData.fieldInvalid; 
-    this._formSelector = formSelector;
+    this._formDomElement = document.querySelector(formDomElement);
+    this._domButton = document.querySelector(validationData.button);
+    this._domCloseButton = document.querySelector(validationData.closeButton);
   }
 
+  enableValidation() {
+    this._domButton.setAttribute('disabled', true);
+    this._domButton.classList.add(this._buttonInactive);
+    this._formDomElement.addEventListener('input', (event) => {this._handlerFormInput(event)});
+    this._setEventListeners();
+};
+
   //обработчик ввода данных
-  _handlerFormInput() {
-  
-    toggleFieldError();
-    setSaveButtonState();
+  _handlerFormInput(event) {
+    this._input = event.target;
+
+    this._toggleFieldError();
+    this._setSaveButtonState();
   };
   
   //выведение текста ошибки
   _toggleFieldError() {
-    const span = this._formInput.nextElementSibling;
-    span.textContent = this._formInput.validationMessage;
+    const span = this._input.nextElementSibling;
+    span.textContent = this._input.validationMessage;
   
     if (span.textContent !== '') {
-      this._formInput.classList.add(this._data.fieldInvalid)
+      this._input.classList.add(this._fieldInvalid)
     } else {
-      this._formInput.classList.remove(this._data.fieldInvalid)
+      this._input.classList.remove(this._fieldInvalid)
     }
   };
   
   //включение-выключение кнопки отправки при валидации
   _setSaveButtonState() {
-    const isValid = this._form.checkValidity();
-  
+    const isValid = this._formDomElement.checkValidity();
+ 
     if (isValid) {
-      this._data.button.removeAttribute('disabled');
-      this._data.button.remove(this._data.buttonInactive);
+      this._domButton.removeAttribute('disabled');
+      this._domButton.classList.remove(this._buttonInactive);
     } else {
-      this._data.button.setAttribute('disabled', true);
-      this._data.button.classList.add(this._data.buttonInactive);
+      this._domButton.setAttribute('disabled', true);
+      this._domButton.classList.add(this._buttonInactive);
     }
   }
   
-  //очистка попапа
-  _clearPopup() {
-    this._inputList = Array.from(document.querySelectorAll(this._formInput));
-  
-    inputList.forEach(() => {
-      const span = this._formInput.nextElementSibling;
-      span.textContent = '';
-      this._formInput.classList.remove(this._data.fieldInvalid);
-    })
+  _setEventListeners() {
+    this._domCloseButton.addEventListener('click', (event) => {this._clearPopupError(event)});
   }
 
-  _setEventListeners() {
-    //this.element.querySelector('.element-place__like-button').addEventListener('click', () => {
-    //  this._handlerFormInput();
-  };
-  
-  enableValidation() {
-    this._inputList = Array.from(document.querySelectorAll(data.form));
-  
-    formList.forEach((form) => {
-      form.addEventListener('input', (event) => handlerFormInput(event, config));
-    })
-  };
+  //очистка попапа
+  _clearPopupError(event) {
+    this._domCloseButton = event.currentTarget;
+
+    const inputList = Array.from(document.querySelectorAll('.popup__input'));
+
+    inputList.forEach((input) => {
+      const span = input.nextElementSibling;
+      span.textContent = '';
+      input.classList.remove(this._fieldInvalid);
+  })
+
+  // _disableButton() {
+  //   this._domButton.setAttribute('disabled', true);
+  //   this._domButton.classList.add(this._buttonInactive);
+  // }
+}
 
 }

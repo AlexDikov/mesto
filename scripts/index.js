@@ -55,6 +55,7 @@ const validationData = {
   form: '.popup__form',
   input: '.popup__input',
   button: '.popup__save-button',
+  closeButton: '.popup__close-button',
   buttonInactive: 'popup__save-button_inactive',
   fieldInvalid: 'popup__input_invalid'
 };
@@ -138,9 +139,9 @@ function openPopupEditProfile() {
 
   openPopup(popupEditProfile);
 
-  clearPopup(validationConfig);
+  //clearPopup(validationConfig);
 
-  activateButton(popupEditProfile);
+  //activateButton(popupEditProfile);
 };
 
 function closePopupEditProfile() {
@@ -153,9 +154,9 @@ function openPopupAddCard() {
 
   openPopup(popupAddCard);
 
-  clearPopup(validationConfig);
+  //clearPopup(validationConfig);
 
-  disableButton(popupAddCard);
+  //disableButton(popupAddCard);
 };
 
 function closeAddCard() {
@@ -180,25 +181,11 @@ function handleImageClick(name, link) {
 };
 
 //-------------------валидация
-
-//активация кнопки отправки формы
-function activateButton(popup) {
-  const button = popup.querySelector('.popup__save-button');
-  button.removeAttribute('disabled');
-  button.classList.remove('popup__save-button_inactive');
-};
-
-function disableButton(popup) {
-  const button = popup.querySelector('.popup__save-button');
-  button.setAttribute('disabled', true);
-  button.classList.add('popup__save-button_inactive');
-};
+const cardFormValidator = new FormValidator(validationData, '#new-card');
+cardFormValidator.enableValidation();
 
 const profileFormValidator = new FormValidator(validationData, '#profile');
 profileFormValidator.enableValidation();
-
-const cardFormValidator = new FormValidator(validationData, '#card');
-cardFormValidator.enableValidation();
 
 //--------------------слушатели 
 
