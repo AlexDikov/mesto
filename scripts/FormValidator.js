@@ -4,16 +4,16 @@ export default class FormValidator {
     this._buttonInactive = validationData.buttonInactive; 
     this._fieldInvalid = validationData.fieldInvalid; 
     this._formDomElement = document.querySelector(formDomElement);
-    this._domButton = document.querySelector(validationData.button);
-    this._domCloseButton = document.querySelector(validationData.closeButton);
-  }
+    this._domButton = this._formDomElement.querySelector(validationData.button);
+    this._domCloseButton = this._formDomElement.nextElementSibling;
+  };
 
   enableValidation() {
     this._domButton.setAttribute('disabled', true);
     this._domButton.classList.add(this._buttonInactive);
     this._formDomElement.addEventListener('input', (event) => {this._handlerFormInput(event)});
     this._setEventListeners();
-};
+  };
 
   //обработчик ввода данных
   _handlerFormInput(event) {
@@ -46,28 +46,21 @@ export default class FormValidator {
       this._domButton.setAttribute('disabled', true);
       this._domButton.classList.add(this._buttonInactive);
     }
-  }
+  };
   
   _setEventListeners() {
-    this._domCloseButton.addEventListener('click', (event) => {this._clearPopupError(event)});
-  }
+    this._domCloseButton.addEventListener('click', () => {this._clearPopupError()});
+  };
 
   //очистка попапа
-  _clearPopupError(event) {
-    this._domCloseButton = event.currentTarget;
-
-    const inputList = Array.from(document.querySelectorAll('.popup__input'));
+  _clearPopupError() {
+    const inputList = Array.from(this._formDomElement.querySelectorAll('.popup__input'));
 
     inputList.forEach((input) => {
       const span = input.nextElementSibling;
       span.textContent = '';
       input.classList.remove(this._fieldInvalid);
-  })
-
-  // _disableButton() {
-  //   this._domButton.setAttribute('disabled', true);
-  //   this._domButton.classList.add(this._buttonInactive);
-  // }
-}
+    })
+  };
 
 }
