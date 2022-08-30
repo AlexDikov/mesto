@@ -138,7 +138,6 @@ function openPopupEditProfile() {
   jobInput.value = profileJob.textContent;
 
   openPopup(popupEditProfile);
-
 };
 
 function closePopupEditProfile() {
@@ -150,7 +149,6 @@ function openPopupAddCard() {
   formNewCard.reset();
 
   openPopup(popupAddCard);
-
 };
 
 function closeAddCard() {

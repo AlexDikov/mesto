@@ -22,8 +22,7 @@ export default class FormValidator {
     this._toggleFieldError();
     this._setSaveButtonState();
   };
-  
-  //выведение текста ошибки
+
   _toggleFieldError() {
     const span = this._input.nextElementSibling;
     span.textContent = this._input.validationMessage;
@@ -62,5 +61,4 @@ export default class FormValidator {
       input.classList.remove(this._fieldInvalid);
     })
   };
-
 }
