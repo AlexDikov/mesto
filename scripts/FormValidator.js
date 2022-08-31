@@ -6,6 +6,7 @@ export default class FormValidator {
     this._formDomElement = document.querySelector(formDomElement);
     this._domButton = this._formDomElement.querySelector(validationData.button);
     this._domCloseButton = this._formDomElement.nextElementSibling;
+    this._inputList = Array.from(this._formDomElement.querySelectorAll('.popup__input'))
   };
 
   enableValidation() {
@@ -53,9 +54,7 @@ export default class FormValidator {
 
   //очистка попапа
   _clearPopupError() {
-    const inputList = Array.from(this._formDomElement.querySelectorAll('.popup__input'));
-
-    inputList.forEach((input) => {
+    this._inputList.forEach((input) => {
       const span = input.nextElementSibling;
       span.textContent = '';
       input.classList.remove(this._fieldInvalid);

@@ -36,6 +36,7 @@ const formEditProfile = popupEditProfile.querySelector('.popup__form');
 const nameInput = formEditProfile.querySelector('.popup__input_field_name');
 const jobInput = formEditProfile.querySelector('.popup__input_field_job');
 const popupAddCard = document.querySelector('.popup_add-card');
+const popupAddCardSaveButton = popupAddCard.querySelector('.popup__save-button');
 const popupAddCardCloseButton = popupAddCard.querySelector('.popup__close-button');
 const formNewCard = popupAddCard.querySelector('.popup__form');
 const placeInput = formNewCard.querySelector('.popup__input_field_name');
@@ -45,7 +46,7 @@ const popupPic = popupZoomPic.querySelector('.popup__picture');
 const popupPicName = popupZoomPic.querySelector('.popup__picture-cap');
 const popupZoomPicCloseButton = popupZoomPic.querySelector('.popup__close-button');
 const profileEditButton = document.querySelector('.profile__edit-button');
-const ProfileCardEditButton = document.querySelector('.profile__add-button')
+const profileCardEditButton = document.querySelector('.profile__add-button')
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 const elements = document.querySelector('.elements');
@@ -62,14 +63,11 @@ const validationData = {
 
 //--------------------функции
 
-//создание карточек из исходного массива
+//создание и добавление карточек из исходного массива
 const reversedCards = initialCards.reverse();
 
 reversedCards.forEach((data) => {
-  const card = new Card(data, '#card', handleImageClick);
-  const cardElement = card.createCard();
-
-  addCard(cardElement);
+  createNewCard(data)
 });
 
 //отправка формы карточки и создание новой
@@ -81,13 +79,21 @@ function submitCardForm(evt) {
     link: picInput.value,
   }
 
-  const card = new Card(data, '#card', handleImageClick);
-  const cardElement = card.createCard();
-
-  addCard(cardElement);
+  createNewCard(data);
 
   closePopup(popupAddCard);
+
+  disableSaveButton();
 };
+
+//создание и добавление в разметку карточки
+
+function createNewCard(data) {
+  const card = new Card(data, '#card', handleImageClick);
+  const cardElement = card.createCard();
+  addCard(cardElement);
+}
+
 
 //добавление карточки в разметку
 function addCard(card) {
@@ -104,6 +110,12 @@ function submitPorfileForm(evt) {
   closePopup(popupEditProfile);
 };
 
+//дизактивация кнопки сохранить
+function disableSaveButton() {
+  popupAddCardSaveButton.setAttribute('disabled', true);
+  popupAddCardSaveButton.classList.add(validationData.buttonInactive);
+}
+
 //открытие-закрытие попапа
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -117,8 +129,8 @@ function closePopup(popup) {
 
 //закрытие попапа при нажатии esc
 function handleEscClose(evt) {
-  const popupActive = document.querySelector('.popup_opened');
   if (evt.key === 'Escape') {
+    const popupActive = document.querySelector('.popup_opened');
     closePopup(popupActive)
   }
 };
@@ -140,10 +152,6 @@ function openPopupEditProfile() {
   openPopup(popupEditProfile);
 };
 
-function closePopupEditProfile() {
-  closePopup(popupEditProfile);
-};
-
 //открытие-закрытие попапа добавления карточки
 function openPopupAddCard() {
   formNewCard.reset();
@@ -151,17 +159,9 @@ function openPopupAddCard() {
   openPopup(popupAddCard);
 };
 
-function closeAddCard() {
-  closePopup(popupAddCard);
-};
-
 //открытие-закрытие зума картинки карточки
 function openPopupZoomPic() {
   openPopup(popupZoomPic);
-};
-
-function closePopupZoomPic() {
-  closePopup(popupZoomPic);
 };
 
 //наполнение зума картинки
@@ -184,7 +184,7 @@ profileFormValidator.enableValidation();
 formEditProfile.addEventListener('submit', submitPorfileForm);
 formNewCard.addEventListener('submit', submitCardForm);
 profileEditButton.addEventListener('click', openPopupEditProfile);
-popupEditProfileCloseButton.addEventListener('click', closePopupEditProfile);
-ProfileCardEditButton.addEventListener('click', openPopupAddCard);
-popupAddCardCloseButton.addEventListener('click', closeAddCard);
-popupZoomPicCloseButton.addEventListener('click', closePopupZoomPic);
+profileCardEditButton.addEventListener('click', openPopupAddCard);
+popupEditProfileCloseButton.addEventListener('click', () => closePopup(popupEditProfile));
+popupAddCardCloseButton.addEventListener('click', () => closePopup(popupAddCard));
+popupZoomPicCloseButton.addEventListener('click', () => closePopup(popupZoomPic));
