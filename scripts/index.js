@@ -1,63 +1,30 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
+import {
+initialCards,
+popups,
+popupEditProfile,
+popupEditProfileCloseButton,
+formEditProfile,
+nameInput,
+jobInput,
+popupAddCard,
+popupAddCardCloseButton,
+formNewCard,
+placeInput,
+picInput,
+popupZoomPic,
+popupPic,
+popupPicName,
+popupZoomPicCloseButton,
+profileEditButton,
+ProfileCardEditButton,
+profileName,
+profileJob,
+elements,
+validationData
+} from './constants.js'
 
-const initialCards = [{
-  name: 'Архыз',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-},
-{
-  name: 'Челябинская область',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-},
-{
-  name: 'Иваново',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-},
-{
-  name: 'Камчатка',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-},
-{
-  name: 'Холмогорский район',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-},
-{
-  name: 'Байкал',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-}
-];
-
-//--------------------переменные
-
-const popups = document.querySelectorAll('.popup')
-const popupEditProfile = document.querySelector('.popup_profile-data');
-const popupEditProfileCloseButton = popupEditProfile.querySelector('.popup__close-button');
-const formEditProfile = popupEditProfile.querySelector('.popup__form');
-const nameInput = formEditProfile.querySelector('.popup__input_field_name');
-const jobInput = formEditProfile.querySelector('.popup__input_field_job');
-const popupAddCard = document.querySelector('.popup_add-card');
-const popupAddCardCloseButton = popupAddCard.querySelector('.popup__close-button');
-const formNewCard = popupAddCard.querySelector('.popup__form');
-const placeInput = formNewCard.querySelector('.popup__input_field_name');
-const picInput = formNewCard.querySelector('.popup__input_field_job');
-const popupZoomPic = document.querySelector('.popup_zoom-pic');
-const popupPic = popupZoomPic.querySelector('.popup__picture');
-const popupPicName = popupZoomPic.querySelector('.popup__picture-cap');
-const popupZoomPicCloseButton = popupZoomPic.querySelector('.popup__close-button');
-const profileEditButton = document.querySelector('.profile__edit-button');
-const ProfileCardEditButton = document.querySelector('.profile__add-button')
-const profileName = document.querySelector('.profile__name');
-const profileJob = document.querySelector('.profile__job');
-const elements = document.querySelector('.elements');
-
-//селекторы для валидации
-const validationData = {
-  form: '.popup__form',
-  input: '.popup__input',
-  button: '.popup__save-button',
-  buttonInactive: 'popup__save-button_inactive',
-  fieldInvalid: 'popup__input_invalid'
-};
 
 //--------------------функции
 
