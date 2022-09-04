@@ -1,22 +1,24 @@
 export default class FormValidator {
-  constructor (validationData, formElement) {
+  constructor (validationData, formDomElement) {
     this._input = validationData.input;
-    this._button = validationData.button;
-    this._buttonInactive = validationData.buttonInactive;
-    this._fieldInvalid = validationData.fieldInvalid;
-    this._formDomElement = document.querySelector(formElement);
+    this._buttonInactive = validationData.buttonInactive; 
+    this._fieldInvalid = validationData.fieldInvalid; 
+    this._formDomElement = document.querySelector(formDomElement);
+    this._domButton = this._formDomElement.querySelector(validationData.button);
+    this._domCloseButton = this._formDomElement.nextElementSibling;
+    this._inputList = Array.from(this._formDomElement.querySelectorAll('.popup__input'))
   };
 
   enableValidation() {
-    this._formDomElement.addEventListener('input', (event) => this._handlerFormInput(event));
-    //this._setEventListeners();
-    //this._toggleFieldError()
-    //this._setSaveButtonState();
+    this._domButton.setAttribute('disabled', true);
+    this._domButton.classList.add(this._buttonInactive);
+    this._formDomElement.addEventListener('input', (event) => {this._handlerFormInput(event)});
+    this._setEventListeners();
   };
 
+  //обработчик ввода данных
   _handlerFormInput(event) {
     this._input = event.target;
-    this._formDomElement = event.currentTarget;
 
     this._toggleFieldError();
     this._setSaveButtonState();
@@ -32,19 +34,30 @@ export default class FormValidator {
       this._input.classList.remove(this._fieldInvalid)
     }
   };
-
-  _setSaveButtonState() { 
-
-    this._button = form.querySelector(); 
-    const isValid = form.checkValidity(); 
   
-    if (isValid) { 
-      this._button.removeAttribute('disabled'); 
-      this._button.classList.remove(this._buttonInactive); 
-    } else { 
-      this._button.setAttribute('disabled', true); 
-      this._button.classList.add(this._buttonInactive); 
-    } 
+  //включение-выключение кнопки отправки при валидации
+  _setSaveButtonState() {
+    const isValid = this._formDomElement.checkValidity();
+ 
+    if (isValid) {
+      this._domButton.removeAttribute('disabled');
+      this._domButton.classList.remove(this._buttonInactive);
+    } else {
+      this._domButton.setAttribute('disabled', true);
+      this._domButton.classList.add(this._buttonInactive);
+    }
+  };
   
-  } 
+  _setEventListeners() {
+    this._domCloseButton.addEventListener('click', () => {this._clearPopupError()});
+  };
+
+  //очистка попапа
+  _clearPopupError() {
+    this._inputList.forEach((input) => {
+      const span = input.nextElementSibling;
+      span.textContent = '';
+      input.classList.remove(this._fieldInvalid);
+    })
+  };
 }

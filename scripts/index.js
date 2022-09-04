@@ -9,6 +9,7 @@ formEditProfile,
 nameInput,
 jobInput,
 popupAddCard,
+popupAddCardSaveButton,
 popupAddCardCloseButton,
 formNewCard,
 placeInput,
@@ -18,7 +19,7 @@ popupPic,
 popupPicName,
 popupZoomPicCloseButton,
 profileEditButton,
-ProfileCardEditButton,
+profileCardEditButton,
 profileName,
 profileJob,
 elements,
@@ -28,14 +29,11 @@ validationData
 
 //--------------------функции
 
-//создание карточек из исходного массива
+//создание и добавление карточек из исходного массива
 const reversedCards = initialCards.reverse();
 
 reversedCards.forEach((data) => {
-  const card = new Card(data, '#card', handleImageClick);
-  const cardElement = card.createCard();
-
-  addCard(cardElement);
+  createNewCard(data)
 });
 
 //отправка формы карточки и создание новой
@@ -47,13 +45,21 @@ function submitCardForm(evt) {
     link: picInput.value,
   }
 
-  const card = new Card(data, '#card', handleImageClick);
-  const cardElement = card.createCard();
-
-  addCard(cardElement);
+  createNewCard(data);
 
   closePopup(popupAddCard);
+
+  disableSaveButton();
 };
+
+//создание и добавление в разметку карточки
+
+function createNewCard(data) {
+  const card = new Card(data, '#card', handleImageClick);
+  const cardElement = card.createCard();
+  addCard(cardElement);
+}
+
 
 //добавление карточки в разметку
 function addCard(card) {
@@ -70,6 +76,12 @@ function submitPorfileForm(evt) {
   closePopup(popupEditProfile);
 };
 
+//дизактивация кнопки сохранить
+function disableSaveButton() {
+  popupAddCardSaveButton.setAttribute('disabled', true);
+  popupAddCardSaveButton.classList.add(validationData.buttonInactive);
+}
+
 //открытие-закрытие попапа
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -83,8 +95,8 @@ function closePopup(popup) {
 
 //закрытие попапа при нажатии esc
 function handleEscClose(evt) {
-  const popupActive = document.querySelector('.popup_opened');
   if (evt.key === 'Escape') {
+    const popupActive = document.querySelector('.popup_opened');
     closePopup(popupActive)
   }
 };
@@ -104,14 +116,6 @@ function openPopupEditProfile() {
   jobInput.value = profileJob.textContent;
 
   openPopup(popupEditProfile);
-
-  //clearPopup(validationConfig);
-
-  activateButton(popupEditProfile);
-};
-
-function closePopupEditProfile() {
-  closePopup(popupEditProfile);
 };
 
 //открытие-закрытие попапа добавления карточки
@@ -119,23 +123,11 @@ function openPopupAddCard() {
   formNewCard.reset();
 
   openPopup(popupAddCard);
-
-  //clearPopup(validationConfig);
-
-  disableButton(popupAddCard);
-};
-
-function closeAddCard() {
-  closePopup(popupAddCard);
 };
 
 //открытие-закрытие зума картинки карточки
 function openPopupZoomPic() {
   openPopup(popupZoomPic);
-};
-
-function closePopupZoomPic() {
-  closePopup(popupZoomPic);
 };
 
 //наполнение зума картинки
@@ -147,32 +139,18 @@ function handleImageClick(name, link) {
 };
 
 //-------------------валидация
-
-//активация кнопки отправки формы
-function activateButton(popup) {
-  const button = popup.querySelector('.popup__save-button');
-  button.removeAttribute('disabled');
-  button.classList.remove('popup__save-button_inactive');
-};
-
-function disableButton(popup) {
-  const button = popup.querySelector('.popup__save-button');
-  button.setAttribute('disabled', true);
-  button.classList.add('popup__save-button_inactive');
-};
+const cardFormValidator = new FormValidator(validationData, '#new-card');
+cardFormValidator.enableValidation();
 
 const profileFormValidator = new FormValidator(validationData, '#profile');
 profileFormValidator.enableValidation();
-
-//const cardFormValidator = new FormValidator(validationData, '#card');
-//cardFormValidator.enableValidation();
 
 //--------------------слушатели 
 
 formEditProfile.addEventListener('submit', submitPorfileForm);
 formNewCard.addEventListener('submit', submitCardForm);
 profileEditButton.addEventListener('click', openPopupEditProfile);
-popupEditProfileCloseButton.addEventListener('click', closePopupEditProfile);
-ProfileCardEditButton.addEventListener('click', openPopupAddCard);
-popupAddCardCloseButton.addEventListener('click', closeAddCard);
-popupZoomPicCloseButton.addEventListener('click', closePopupZoomPic);
+profileCardEditButton.addEventListener('click', openPopupAddCard);
+popupEditProfileCloseButton.addEventListener('click', () => closePopup(popupEditProfile));
+popupAddCardCloseButton.addEventListener('click', () => closePopup(popupAddCard));
+popupZoomPicCloseButton.addEventListener('click', () => closePopup(popupZoomPic));
