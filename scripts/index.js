@@ -41,13 +41,7 @@ const section = new Section({items: reversedCards, renderer: (item) => {
 
 section.createSection();
 
-const newCard = new Section({items: reversedCards, renderer: (item) => {
-  const card = new Card(item, '#card', handleImageClick);
-  const cardElement = card.createCard();
-  return cardElement;
-}}, '.elements'); 
 
-newCard.addItem();
 
 //отправка формы карточки и создание новой
 function submitCardForm(evt) {
@@ -58,25 +52,33 @@ function submitCardForm(evt) {
     link: picInput.value,
   }
 
-  createNewCard(data);
+  const newCard = new Section({
+    items: data, renderer: (item) => {
+    const card = new Card(item, '#card', handleImageClick);
+    const cardElement = card.createCard();
+    return cardElement;
+    }
+  }, '.elements');
 
+  newCard.createElement();
+  
   closePopup(popupAddCard);
 
   disableSaveButton();
 };
 
-//создание и добавление в разметку карточки
-function createNewCard(data) {
-  const card = new Card(data, '#card', handleImageClick);
-  const cardElement = card.createCard();
-  addCard(cardElement);
-}
+// //создание и добавление в разметку карточки
+// function createNewCard(data) {
+//   const card = new Card(data, '#card', handleImageClick);
+//   const cardElement = card.createCard();
+//   addCard(cardElement);
+// }
 
 
-//добавление карточки в разметку
-function addCard(card) {
-  elements.prepend(card);
-}
+// //добавление карточки в разметку
+// function addCard(card) {
+//   elements.prepend(card);
+// }
 
 
 //отправка формы профиля
