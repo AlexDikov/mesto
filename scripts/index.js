@@ -33,9 +33,21 @@ validationData
 //создание и добавление карточек из исходного массива
 const reversedCards = initialCards.reverse();
 
-// reversedCards.forEach((data) => {
-//   createNewCard(data)
-// });
+const section = new Section({items: reversedCards, renderer: (item) => {
+  const card = new Card(item, '#card', handleImageClick);
+  const cardElement = card.createCard();
+  return cardElement;
+}}, '.elements'); 
+
+section.createSection();
+
+const newCard = new Section({items: reversedCards, renderer: (item) => {
+  const card = new Card(item, '#card', handleImageClick);
+  const cardElement = card.createCard();
+  return cardElement;
+}}, '.elements'); 
+
+newCard.addItem();
 
 //отправка формы карточки и создание новой
 function submitCardForm(evt) {
@@ -54,27 +66,18 @@ function submitCardForm(evt) {
 };
 
 //создание и добавление в разметку карточки
-// function createNewCard(data) {
-//   const card = new Card(data, '#card', handleImageClick);
-//   const cardElement = card.createCard();
-//   addCard(cardElement);
-// }
+function createNewCard(data) {
+  const card = new Card(data, '#card', handleImageClick);
+  const cardElement = card.createCard();
+  addCard(cardElement);
+}
 
 
 //добавление карточки в разметку
-// function addCard(card) {
-//   elements.prepend(card);
-// }
+function addCard(card) {
+  elements.prepend(card);
+}
 
-//создание и добавление карточек из исходного массива
-const initialCardList = new Section({
-  items: reversedCards,
-  renderer: (item) => {
-    const card = new Card(item, '#card');
-    const cardElement = card.createCard();
-    initialCardList.addItem(cardElement);
-  }
-}, elements);
 
 //отправка формы профиля
 function submitPorfileForm(evt) {

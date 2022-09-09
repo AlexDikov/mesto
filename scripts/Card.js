@@ -10,13 +10,13 @@ export default class Card {
 
   //копирование образца
   _getTemplate() {
-      const cardElement = document
-      .querySelector(this._card)
-      .content
-      .querySelector('.element')
-      .cloneNode(true);
+    const cardElement = document
+    .querySelector(this._card)
+    .content
+    .querySelector('.element')
+    .cloneNode(true);
       
-      return cardElement;
+    return cardElement;
   } 
 
   //генерирование новой карточки

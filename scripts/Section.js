@@ -3,12 +3,17 @@ export default class Section {
     this._renderedItems = items;
     this._renderer = renderer;
     this._elementContainer = document.querySelector(elementContainer);
-    debugger;
   }
 
-  //добавление элемента в разметку
-  addItem() {
-    this._elementContainer.prepend(this.element);
+  createSection () {
+    this._renderedItems.forEach((item) => {
+      const renderedCard = this._renderer(item);
+      this.addItem(renderedCard);
+    })
   }
 
+
+  addItem(element) {
+    this._elementContainer.prepend(element);
+  }
 }
