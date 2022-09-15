@@ -2,7 +2,8 @@ import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import Section from './Section.js';
 import Popup from './Popup.js';
-// import PopupWithImage from './PopupWithImage.js';
+import PopupWithImage from './PopupWithImage.js';
+//import PopupWithForm from './PopupWithForm.js';
 import {
 initialCards,
 popups,
@@ -56,11 +57,15 @@ function submitCardForm(evt) {
   const cardElement = card.createCard();
 
   section.addItem(cardElement);
-
-  closePopup(popupAddCard);
-
-  disableSaveButton();
 };
+
+
+const popupProfile = new Popup (popupEditProfile);
+popupProfile.setEventListeners();
+const popupCard = new Popup (popupAddCard);
+popupCard.setEventListeners();
+const popupZoom = new PopupWithImage (popupZoomPic);
+popupZoom.setEventListeners();
 
 //отправка формы профиля
 function submitPorfileForm(evt) {
@@ -69,21 +74,8 @@ function submitPorfileForm(evt) {
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
 
-  closePopup(popupEditProfile);
 };
 
-//дизактивация кнопки сохранить
-function disableSaveButton() {
-  popupAddCardSaveButton.setAttribute('disabled', true);
-  popupAddCardSaveButton.classList.add(validationData.buttonInactive);
-}
-
-const popupProfile = new Popup (popupEditProfile);
-popupProfile.setEventListeners();
-const popupCard = new Popup (popupAddCard);
-popupCard.setEventListeners();
-const popupZoom = new Popup(popupZoomPic);
-popupZoom.setEventListeners();
 
 //открытие-закрытие попапа профиля
 function openPopupEditProfile() {
@@ -100,17 +92,9 @@ function openPopupAddCard() {
   popupCard.open();
 };
 
-//открытие-закрытие зума картинки карточки
-// function openPopupZoomPic() {
-//   openPopup(popupZoomPic);
-// };
-
 //наполнение зума картинки
 function handleImageClick(name, link) {
-  popupPic.src = link;
-  popupPic.alt = name;
-  popupPicName.textContent = name;
-  popupZoom.open();
+  popupZoom.open(name, link);
 };
 
 //-------------------валидация

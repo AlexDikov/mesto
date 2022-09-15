@@ -1,24 +1,38 @@
+import Popup from './Popup.js'
 export default class PopupWithForm extends Popup {
-  constuctor(popupSelector) {
+  constructor({popupSelector, handleFormSubmit}) {
     super(popupSelector);
+    this._handleFormSubmit = handleFormSubmit;
+    this._saveButton = this._popupSelector.querySelector('.popup__save-button');
   };
+
   _getInputValues() {
+    this._inputList = array.from(this._popupSelector.querySelectorAll('.popup__input'));
 
-  }
-
+    this._formValues = {};
+    
+    this._inputList.forEach(input => {
+      this._formValues[input.name] = input.value;
+    });
+    
+    return this._formValues;
+  };
+  
   close() {
-    this._popupSelector.classList.remove('popup_opened');
-    document.removeEventListener('keydown', (evt) => {this._handleEscClick(evt)});
-    this._disableSaveButton()
+    super.close();
+    this._saveButton.setAttribute('disabled', true);
+    this._saveButton.classList.add('popup__save-button_inactive');
   }
 
   setEventListeners() {
-    this._popupSelector.querySelector('.popup__close-button').addEventListener('click',() => {this.close()});
-    this._popupSelector.addEventListener('mousedown', (evt) => {
-      if (evt.target.classList.contains('popup_opened')) {
-        this.close()
-      }
-    })
-    this._popupSelector.querySelector('.popup__close-button').addEventListener('submit',() => {this.close()});
+    super.setEventListeners();
+    
+    this._element.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    
+      this._handleFormSubmit(this._getInputValues());
+    
+      this._element.reset();
+    });
   };
 }
