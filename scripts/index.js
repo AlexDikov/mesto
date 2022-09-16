@@ -3,7 +3,8 @@ import FormValidator from './FormValidator.js';
 import Section from './Section.js';
 import Popup from './Popup.js';
 import PopupWithImage from './PopupWithImage.js';
-//import PopupWithForm from './PopupWithForm.js';
+import PopupWithForm from './PopupWithForm.js';
+import UserInfo from './UserInfo.js'
 import {
 initialCards,
 popups,
@@ -66,21 +67,26 @@ const popupCard = new Popup (popupAddCard);
 popupCard.setEventListeners();
 const popupZoom = new PopupWithImage (popupZoomPic);
 popupZoom.setEventListeners();
+const userData = new UserInfo (profileName,profileJob);
+
+
 
 //отправка формы профиля
 function submitPorfileForm(evt) {
   evt.preventDefault();
 
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
-
+  userData.setUserInfo();
 };
 
 
 //открытие-закрытие попапа профиля
 function openPopupEditProfile() {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
+  const data = {
+    name: nameInput.value,
+    job: jobInput.value,
+  }
+
+  userData.getUserInfo();
 
   popupProfile.open();
 };
