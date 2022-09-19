@@ -46,47 +46,45 @@ const section = new Section({items: reversedCards, renderer: (item) => {
 section.createSection();
 
 //отправка формы карточки и создание новой
-function submitCardForm(evt) {
+function submitCardForm(evt, data) {
   evt.preventDefault();
 
-  const data = {
-    name: placeInput.value,
-    link: picInput.value,
-  }
+  // const data = {
+  //   name: placeInput.value,
+  //   link: picInput.value,
+  // }
 
   const card = new Card(data, '#card', handleImageClick) 
-  const cardElement = card.createCard();
+  const cardElement = card.createCard(data);
 
   section.addItem(cardElement);
 };
 
 
-const popupProfile = new Popup (popupEditProfile);
-popupProfile.setEventListeners();
-const popupCard = new Popup (popupAddCard);
-popupCard.setEventListeners();
+// const popupProfile = new PopupWithForm (popupEditProfile, submitPorfileForm);
+const popupCard = new PopupWithForm (popupAddCard, submitCardForm);
 const popupZoom = new PopupWithImage (popupZoomPic);
+const userData = new UserInfo (profileName, profileJob);
+
+// popupProfile.setEventListeners();
+popupCard.setEventListeners();
 popupZoom.setEventListeners();
-const userData = new UserInfo (profileName,profileJob);
-
-
 
 //отправка формы профиля
-function submitPorfileForm(evt) {
-  evt.preventDefault();
+// function submitPorfileForm(evt) {
+//   evt.preventDefault();
 
-  userData.setUserInfo();
-};
+//   userData.setUserInfo();
+// };
 
 
 //открытие-закрытие попапа профиля
 function openPopupEditProfile() {
-  const data = {
-    name: nameInput.value,
-    job: jobInput.value,
-  }
+  
+  const userInfo = userData.getUserInfo();
 
-  userData.getUserInfo();
+  nameInput.value = userInfo.name;
+  jobInput.value = userInfo.job;
 
   popupProfile.open();
 };
@@ -116,6 +114,3 @@ formEditProfile.addEventListener('submit', submitPorfileForm);
 formNewCard.addEventListener('submit', submitCardForm);
 profileEditButton.addEventListener('click', openPopupEditProfile);
 profileCardEditButton.addEventListener('click', openPopupAddCard);
-// popupEditProfileCloseButton.addEventListener('click', () => popupProfile.close());
-//popupAddCardCloseButton.addEventListener('click', () => closePopup(popupAddCard));
-//popupZoomPicCloseButton.addEventListener('click', () => closePopup(popupZoomPic));
