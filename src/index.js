@@ -1,34 +1,21 @@
+import './pages/index.css'
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import Section from './Section.js';
-import Popup from './Popup.js';
 import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
 import UserInfo from './UserInfo.js'
 import {
-initialCards,
-popups,
-popupEditProfile,
-popupEditProfileCloseButton,
-formEditProfile,
-nameInput,
-jobInput,
-popupAddCard,
-popupAddCardSaveButton,
-popupAddCardCloseButton,
-formNewCard,
-placeInput,
-picInput,
-popupZoomPic,
-popupPic,
-popupPicName,
-popupZoomPicCloseButton,
-profileEditButton,
-profileCardEditButton,
-profileName,
-profileJob,
-elements,
-validationData
+  initialCards,
+  popupEditProfile,
+  nameInput,
+  jobInput,
+  popupAddCard,
+  formNewCard,
+  popupZoomPic,
+  profileEditButton,
+  profileCardEditButton,
+  validationData
 } from './constants.js'
 
 
@@ -37,11 +24,13 @@ validationData
 //создание и добавление карточек из исходного массива
 const reversedCards = initialCards.reverse();
 
-const section = new Section({items: reversedCards, renderer: (item) => {
-  const card = new Card(item, '#card', handleImageClick);
-  const cardElement = card.createCard();
-  return cardElement;
-}}, '.elements'); 
+const section = new Section({
+  items: reversedCards, renderer: (item) => {
+    const card = new Card(item, '#card', handleImageClick);
+    const cardElement = card.createCard();
+    return cardElement;
+  }
+}, '.elements');
 
 section.createSection();
 
@@ -49,38 +38,41 @@ section.createSection();
 function submitCardForm(evt, data) {
   evt.preventDefault();
 
-  // const data = {
-  //   name: placeInput.value,
-  //   link: picInput.value,
-  // }
+  const info = {
+    name: data['place'],
+    link: data['place-link']
+  }
 
-  const card = new Card(data, '#card', handleImageClick) 
+  const card = new Card(info, '#card', handleImageClick)
   const cardElement = card.createCard(data);
 
   section.addItem(cardElement);
+  popupCard.close();
 };
 
 
-// const popupProfile = new PopupWithForm (popupEditProfile, submitPorfileForm);
-const popupCard = new PopupWithForm (popupAddCard, submitCardForm);
-const popupZoom = new PopupWithImage (popupZoomPic);
-const userData = new UserInfo (profileName, profileJob);
+const popupProfile = new PopupWithForm(popupEditProfile, submitPorfileForm);
+const userData = new UserInfo({ userName: '.profile__name', userJob: '.profile__job' });
+const popupCard = new PopupWithForm(popupAddCard, submitCardForm);
+const popupZoom = new PopupWithImage(popupZoomPic);
 
-// popupProfile.setEventListeners();
+popupProfile.setEventListeners();
 popupCard.setEventListeners();
 popupZoom.setEventListeners();
 
 //отправка формы профиля
-// function submitPorfileForm(evt) {
-//   evt.preventDefault();
+function submitPorfileForm(evt, data) {
+  evt.preventDefault();
 
-//   userData.setUserInfo();
-// };
+  const { person, job } = data;
+
+  userData.setUserInfo(person, job);
+  popupProfile.close();
+};
 
 
 //открытие-закрытие попапа профиля
 function openPopupEditProfile() {
-  
   const userInfo = userData.getUserInfo();
 
   nameInput.value = userInfo.name;
@@ -92,7 +84,6 @@ function openPopupEditProfile() {
 //открытие-закрытие попапа добавления карточки
 function openPopupAddCard() {
   formNewCard.reset();
-
   popupCard.open();
 };
 
@@ -110,7 +101,5 @@ profileFormValidator.enableValidation();
 
 //--------------------слушатели 
 
-formEditProfile.addEventListener('submit', submitPorfileForm);
-formNewCard.addEventListener('submit', submitCardForm);
 profileEditButton.addEventListener('click', openPopupEditProfile);
 profileCardEditButton.addEventListener('click', openPopupAddCard);
