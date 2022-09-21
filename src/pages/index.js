@@ -1,10 +1,10 @@
-import './pages/index.css'
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
-import Section from './Section.js';
-import PopupWithImage from './PopupWithImage.js';
-import PopupWithForm from './PopupWithForm.js';
-import UserInfo from './UserInfo.js'
+import './index.css'
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js'
 import {
   initialCards,
   popupEditProfile,
@@ -16,7 +16,7 @@ import {
   profileEditButton,
   profileCardEditButton,
   validationData
-} from './constants.js'
+} from '../components/constants.js'
 
 
 //--------------------функции
@@ -25,11 +25,7 @@ import {
 const reversedCards = initialCards.reverse();
 
 const section = new Section({
-  items: reversedCards, renderer: (item) => {
-    const card = new Card(item, '#card', handleImageClick);
-    const cardElement = card.createCard();
-    return cardElement;
-  }
+  items: reversedCards, renderer: (item) => createCard(item)
 }, '.elements');
 
 section.createSection();
@@ -43,12 +39,15 @@ function submitCardForm(evt, data) {
     link: data['place-link']
   }
 
-  const card = new Card(info, '#card', handleImageClick)
-  const cardElement = card.createCard(data);
-
-  section.addItem(cardElement);
+  section.addItem(createCard(info));
   popupCard.close();
 };
+
+function createCard(item) {
+  const card = new Card(item, '#card', handleImageClick);
+  const cardElement = card.createCard();
+  return cardElement
+}
 
 
 const popupProfile = new PopupWithForm(popupEditProfile, submitPorfileForm);
@@ -78,6 +77,7 @@ function openPopupEditProfile() {
   nameInput.value = userInfo.name;
   jobInput.value = userInfo.job;
 
+  profileFormValidator.resetValidation()
   popupProfile.open();
 };
 

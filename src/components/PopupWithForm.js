@@ -5,11 +5,10 @@ export default class PopupWithForm extends Popup {
     this._handleFormSubmit = handleFormSubmit;
     this._saveButton = this._popupSelector.querySelector('.popup__save-button');
     this._form = this._popupSelector.querySelector('.popup__form');
+    this._inputList = Array.from(this._form.querySelectorAll('.popup__input'));
   };
 
   _getInputValues() {
-    this._inputList = Array.from(this._form.querySelectorAll('.popup__input'));
-
     this._formValues = {};
     
     this._inputList.forEach(input => {
@@ -21,9 +20,6 @@ export default class PopupWithForm extends Popup {
   
   close() {
     super.close();
-    this._saveButton.setAttribute('disabled', true);
-    this._saveButton.classList.add('popup__save-button_inactive');
-    this._form.reset();
   }
 
   setEventListeners() {

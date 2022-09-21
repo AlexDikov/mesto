@@ -22,18 +22,20 @@ export default class Card {
   //генерирование новой карточки
   createCard() {
     this._element = this._getTemplate();
+    this._cardImage = this._element.querySelector('.element__image')
     this._setEventListeners();
 
     this._element.querySelector('.element-place__name').textContent = this._name;
-    this._element.querySelector('.element__image').src = this._link;
-    this._element.querySelector('.element__image').alt = this._name;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
 
     return this._element;
   }
 
   //обработчик клика лайк
   _handleLikeClick() {
-    this._element.querySelector('.element-place__like-button').classList.toggle('element-place__like-button_active');
+    this._likeButton = this._element.querySelector('.element-place__like-button');
+    this._likeButton.classList.toggle('element-place__like-button_active');
   }
 
   //обработчик клика удалить
@@ -49,7 +51,7 @@ export default class Card {
     this._element.querySelector('.element__delete-button').addEventListener('click', () => {
       this._handleDeleteClick();
     });
-    this._element.querySelector('.element__image').addEventListener('click', () => {
+    this._cardImage.addEventListener('click', () => {
       this._handleImageClick(this._name, this._link);
     });
   }

@@ -47,6 +47,11 @@ export default class FormValidator {
       this._domButton.classList.add(this._buttonInactive);
     }
   };
+
+  _disableSaveButton() {
+    this._domButton.setAttribute('disabled', true);
+    this._domButton.classList.add(this._buttonInactive);
+  }
   
   _setEventListeners() {
     this._domCloseButton.addEventListener('click', () => {this._clearPopupError()});
@@ -60,4 +65,9 @@ export default class FormValidator {
       input.classList.remove(this._fieldInvalid);
     })
   };
+
+  resetValidation() {
+    this._disableSaveButton();
+    this._clearPopupError()
+  }
 }
