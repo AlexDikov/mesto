@@ -17,29 +17,37 @@ import {
   profileCardEditButton,
   validationData
 } from '../components/constants.js'
+import {api} from '../components/Api.js'
 
+//загрузка профиля с сервера
 
-//--------------------функции
+api.getProfile()
+  .then(data => {userData.setUserInfo(data.name, data.about, data.avatar) 
+});
 
-//создание и добавление карточек из исходного массива
-const reversedCards = initialCards.reverse();
+//загрузка массива карточек с сервера
 
-const section = new Section({
-  items: reversedCards, renderer: (item) => createCard(item)
-}, '.elements');
-
-section.createSection();
+api.getInitialCards()
+  .then(data => { 
+    const section = new Section({
+      items: data, renderer: (item) => createCard(item)
+    }, '.elements');
+   
+    section.createSection();
+});
 
 //отправка формы карточки и создание новой
 function submitCardForm(evt, data) {
   evt.preventDefault();
 
   const info = {
-    name: data['place'],
-    link: data['place-link']
+    name: data.place,
+    link: data.link
   }
 
-  section.addItem(createCard(info));
+  api.addNewCard(info)
+
+  //section.addItem(createCard(data));
   popupCard.close();
 };
 
@@ -48,7 +56,6 @@ function createCard(item) {
   const cardElement = card.createCard();
   return cardElement
 }
-
 
 const popupProfile = new PopupWithForm(popupEditProfile, submitPorfileForm);
 const userData = new UserInfo({ userName: '.profile__name', userJob: '.profile__job' });
@@ -63,9 +70,10 @@ popupZoom.setEventListeners();
 function submitPorfileForm(evt, data) {
   evt.preventDefault();
 
-  const { person, job } = data;
+  api.editProfile(data)
 
-  userData.setUserInfo(person, job);
+ //.then(data => {userData.setUserInfo(data.name, data.about) })
+
   popupProfile.close();
 };
 
@@ -103,3 +111,4 @@ profileFormValidator.enableValidation();
 
 profileEditButton.addEventListener('click', openPopupEditProfile);
 profileCardEditButton.addEventListener('click', openPopupAddCard);
+

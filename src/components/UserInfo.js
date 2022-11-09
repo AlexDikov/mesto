@@ -11,8 +11,9 @@ export default class UserInfo {
     }
   };
 
-  setUserInfo(name, job) {
+  setUserInfo(name, job, avatar) {
     this._userName.textContent = name;
     this._userJob.textContent = job;
+    document.querySelector('.profile__avatar').src = avatar;
   };
 }
