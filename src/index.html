@@ -14,7 +14,7 @@
       <section class="profile">
         <div class="profile__container">
           <img class="profile__avatar" src="" alt="аватар">
-          <div class="profile__edit-avatar"></div>
+          <button class="profile__edit-avatar-button" type="button" aria-label="редактировать аватар" ></button>
           <div class="profile__info">
             <h1 class="profile__name"></h1>
             <button class="profile__edit-button" type="button" aria-label="редактировать профиль"></button>
@@ -75,22 +75,22 @@
         <button class="popup__close-button" type="button" aria-label="закрыть"></button>
       </figure>
     </div>
-    <div class="popup popup_confirmation">
+    <div class="popup popup_edit-avatar">
       <div class="popup__container">
-        <h2 class="popup__title">Вы уверены?</h2>
-        <form class="popup__form" id="confirmation" novalidate>
-          <button class="popup__save-button" type="submit">Да</button>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <form class="popup__form" id="edit-avatar" novalidate>
+          <input class="popup__input popup__input_field_job" type="url" name="place-link" placeholder="Ссылка на фотографию" required>
+          <span class="popup__input-error popup__input-error_second"></span>
+          <button class="popup__save-button" type="submit">Сохранить</button>
         </form>
         <button class="popup__close-button" type="button" aria-label="закрыть"></button>
       </div>
     </div>
-    <div class="popup popup_new-avatar">
+    <div class="popup popup_delete-card">
       <div class="popup__container">
-        <h2 class="popup__title">Обновить аватар</h2>
-        <form class="popup__form" id="new-avatar" novalidate>
-          <input class="popup__input popup__input_field_job" type="url" name="place-link" placeholder="Ссылка на фотографию" required>
-          <span class="popup__input-error popup__input-error_second"></span>
-          <button class="popup__save-button" type="submit">Сохранить</button>
+        <h2 class="popup__title">Вы уверены?</h2>
+        <form class="popup__form" id="confirmation" novalidate>
+          <button class="popup__save-button" type="submit">Да</button>
         </form>
         <button class="popup__close-button" type="button" aria-label="закрыть"></button>
       </div>

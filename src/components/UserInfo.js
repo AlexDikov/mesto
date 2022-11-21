@@ -16,4 +16,5 @@ export default class UserInfo {
     this._userJob.textContent = job;
     document.querySelector('.profile__avatar').src = avatar;
   };
+
 }

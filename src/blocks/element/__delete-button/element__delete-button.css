@@ -10,6 +10,7 @@
   border: none;
   transition-property: opacity;
   transition-duration: 0.5s;
+  visibility: hidden;
 }
 
 .element__delete-button:hover {

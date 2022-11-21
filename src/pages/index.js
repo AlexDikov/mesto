@@ -2,19 +2,21 @@ import './index.css'
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
+import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js'
 import {
-  initialCards,
+  popupEditAvatar,
+  popupDeleteCard,
   popupEditProfile,
   nameInput,
   jobInput,
   popupAddCard,
-  formNewCard,
   popupZoomPic,
   profileEditButton,
-  profileCardEditButton,
+  cardAddButton,
+  avatarEditButton,
   validationData
 } from '../components/constants.js'
 import {api} from '../components/Api.js'
@@ -30,7 +32,7 @@ api.getProfile()
 api.getInitialCards()
   .then(data => { 
     const section = new Section({
-      items: data, renderer: (item) => createCard(item)
+      items: data.reverse(), renderer: (item) => createCard(item)
     }, '.elements');
    
     section.createSection();
@@ -40,6 +42,8 @@ api.getInitialCards()
 function submitCardForm(evt, data) {
   evt.preventDefault();
 
+  popupCard.proceedSubmit()
+
   const info = {
     name: data.place,
     link: data.link
@@ -47,12 +51,12 @@ function submitCardForm(evt, data) {
 
   api.addNewCard(info)
 
-  //section.addItem(createCard(data));
   popupCard.close();
+  
 };
 
 function createCard(item) {
-  const card = new Card(item, '#card', handleImageClick);
+  const card = new Card(item, '#card', handleImageClick, handleDeleteClick);
   const cardElement = card.createCard();
   return cardElement
 }
@@ -61,18 +65,21 @@ const popupProfile = new PopupWithForm(popupEditProfile, submitPorfileForm);
 const userData = new UserInfo({ userName: '.profile__name', userJob: '.profile__job' });
 const popupCard = new PopupWithForm(popupAddCard, submitCardForm);
 const popupZoom = new PopupWithImage(popupZoomPic);
+const popupAvatar = new PopupWithForm(popupEditAvatar, submitAvatarForm);
+export const popupDeleteConfirm = new Popup(popupDeleteCard);
 
 popupProfile.setEventListeners();
 popupCard.setEventListeners();
 popupZoom.setEventListeners();
+popupAvatar.setEventListeners();
 
 //отправка формы профиля
 function submitPorfileForm(evt, data) {
   evt.preventDefault();
 
-  api.editProfile(data)
+  popupProfile.proceedSubmit()
 
- //.then(data => {userData.setUserInfo(data.name, data.about) })
+  api.editProfile(data)
 
   popupProfile.close();
 };
@@ -95,10 +102,34 @@ function openPopupAddCard() {
   popupCard.open();
 };
 
+//открытие-закрытие попапа аватара
+function openPopupEditAvatar() {
+  cardFormValidator.resetValidation()
+  popupAvatar.open();
+};
+
+//отправка формы профиля
+function submitAvatarForm(evt, data) {
+  evt.preventDefault();
+
+  popupAvatar.proceedSubmit()
+
+  api.editAvatar(data["place-link"]);
+
+  popupAvatar.close();
+};
+
 //наполнение зума картинки
 function handleImageClick(name, link) {
   popupZoom.open(name, link);
 };
+
+//обработчик клика удалить
+function handleDeleteClick(id) {
+  popupDeleteConfirm.open();
+
+  popupDeleteConfirm.addEventListener('click', api.removeCard(id));
+}
 
 //-------------------валидация
 const cardFormValidator = new FormValidator(validationData, '#new-card');
@@ -107,8 +138,12 @@ cardFormValidator.enableValidation();
 const profileFormValidator = new FormValidator(validationData, '#profile');
 profileFormValidator.enableValidation();
 
+const profileAvatarValidator = new FormValidator(validationData, '#edit-avatar');
+profileAvatarValidator.enableValidation();
+
 //--------------------слушатели 
 
 profileEditButton.addEventListener('click', openPopupEditProfile);
-profileCardEditButton.addEventListener('click', openPopupAddCard);
+cardAddButton.addEventListener('click', openPopupAddCard);
+avatarEditButton.addEventListener('click', openPopupEditAvatar)
 
