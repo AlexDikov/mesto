@@ -62,16 +62,17 @@ function createCard(item) {
 }
 
 const popupProfile = new PopupWithForm(popupEditProfile, submitPorfileForm);
-const userData = new UserInfo({ userName: '.profile__name', userJob: '.profile__job' });
+export const userData = new UserInfo({ userName: '.profile__name', userJob: '.profile__job' });
 const popupCard = new PopupWithForm(popupAddCard, submitCardForm);
 const popupZoom = new PopupWithImage(popupZoomPic);
 const popupAvatar = new PopupWithForm(popupEditAvatar, submitAvatarForm);
-export const popupDeleteConfirm = new Popup(popupDeleteCard);
+const popupDeleteConfirm = new Popup(popupDeleteCard);
 
 popupProfile.setEventListeners();
 popupCard.setEventListeners();
 popupZoom.setEventListeners();
 popupAvatar.setEventListeners();
+popupDeleteConfirm.setEventListeners();
 
 //отправка формы профиля
 function submitPorfileForm(evt, data) {
@@ -124,11 +125,14 @@ function handleImageClick(name, link) {
   popupZoom.open(name, link);
 };
 
+
 //обработчик клика удалить
 function handleDeleteClick(id) {
   popupDeleteConfirm.open();
 
-  popupDeleteConfirm.addEventListener('click', api.removeCard(id));
+  const deleteForm = document.getElementById('confirmation')
+
+  deleteForm.addEventListener('submit', api.removeCard(id));
 }
 
 //-------------------валидация

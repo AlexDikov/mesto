@@ -57,6 +57,9 @@ export default class Card {
   _handleLikeClick(id, like) {
     api.toggleLike(id, like);
     this._likeButton.classList.toggle('element-place__like-button_active');
+    if(this._likeButton.classList.contains('element-place__like-button_active')){
+    this._likes.textContent -= "-1";}
+    else{this._likes.textContent -= "1";}
   }
 
   //навешивание слушателей

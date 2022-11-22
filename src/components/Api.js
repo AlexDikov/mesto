@@ -1,4 +1,5 @@
 import { data } from "autoprefixer";
+import { userData } from "../pages/index.js"
 
 class Api {
   constructor({ baseUrl, headers }) {
@@ -28,11 +29,12 @@ class Api {
     })
       .then((res) => {
         if (res.ok) {
-          return res.json().then((data) => {
-            return data._id;
-          });
+          return res.json()
         }
         return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .then((data) => {
+        return data._id;
       })
       .catch((err) => {
         console.log(err);
@@ -47,6 +49,17 @@ class Api {
         name: data.name,
         about: data.about,
       }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json()
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .then((data) => {
+      userData.setUserInfo(data.name, data.about, data.avatar)
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
 
@@ -58,6 +71,17 @@ class Api {
       body: JSON.stringify({
         avatar: data,
       }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json()
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .then((data) => {
+      userData.setUserInfo(data.name, data.about, data.avatar)
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
 
@@ -84,6 +108,14 @@ class Api {
         name: data.name,
         link: data.link,
       }),
+    }).then((res) => {
+      if (res.ok) {
+        window.location.reload();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
 
@@ -91,6 +123,14 @@ class Api {
     return fetch(`${this._baseUrlCards}/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
 
