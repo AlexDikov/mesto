@@ -19,7 +19,8 @@ import {
   cardAddButton,
   avatarEditButton,
   validationData
-} from '../components/constants'
+} from '../utils/constants'
+import PopupConfirmation from '../components/popupConfirmation';
 
 export const api = new Api({
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-54",
@@ -32,8 +33,9 @@ export const api = new Api({
 //загрузка профиля с сервера
 
 api.getProfile()
-  .then(data => {userData.setUserInfo(data.name, data.about, data.avatar) 
-});
+  .then(data => {
+    userData.setUserInfo(data.name, data.about, data.avatar) 
+  }).catch((err) => {console.log(err)});
 
 //загрузка массива карточек с сервера
 
@@ -44,6 +46,8 @@ api.getInitialCards()
     }, '.elements');
    
     section.createSection();
+}).catch((err) => {
+  console.log(err);
 });
 
 //отправка формы карточки и создание новой
@@ -58,6 +62,9 @@ function submitCardForm(evt, data) {
   }
 
   api.addNewCard(info)
+  .catch((err) => {
+    console.log(err);
+  });
 
   popupCard.close();
   
@@ -74,7 +81,7 @@ export const userData = new UserInfo({ userName: '.profile__name', userJob: '.pr
 const popupCard = new PopupWithForm(popupAddCard, submitCardForm);
 const popupZoom = new PopupWithImage(popupZoomPic);
 const popupAvatar = new PopupWithForm(popupEditAvatar, submitAvatarForm);
-const popupDeleteConfirm = new Popup(popupDeleteCard);
+const popupDeleteConfirm = new PopupConfirmation(popupDeleteCard);
 
 popupProfile.setEventListeners();
 popupCard.setEventListeners();
@@ -89,6 +96,12 @@ function submitPorfileForm(evt, data) {
   popupProfile.proceedSubmit()
 
   api.editProfile(data)
+  .then((data) => {
+    userData.setUserInfo(data.name, data.about, data.avatar)
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
   popupProfile.close();
 };
@@ -123,7 +136,13 @@ function submitAvatarForm(evt, data) {
 
   popupAvatar.proceedSubmit()
 
-  api.editAvatar(data["place-link"]);
+  api.editAvatar(data["place-link"])
+  .then((data) => {
+    userData.setUserInfo(data.name, data.about, data.avatar)
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
   popupAvatar.close();
 };
@@ -140,7 +159,10 @@ function handleDeleteClick(id) {
 
   const deleteForm = document.getElementById('confirmation')
 
-  deleteForm.addEventListener('submit', api.removeCard(id));
+  deleteForm.addEventListener('submit', api.removeCard(id)
+  .catch((err) => {
+    console.log(err);
+  }));
 }
 
 //-------------------валидация
