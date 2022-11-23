@@ -1,7 +1,6 @@
-import { data } from "autoprefixer";
-import { userData } from "../pages/index.js"
+import { userData } from "../pages/index"
 
-class Api {
+export default class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrlUser = `${baseUrl}/users/me`;
     this._baseUrlCards = `${baseUrl}/cards`;
@@ -159,10 +158,4 @@ class Api {
   }
 }
 
-export const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-54",
-  headers: {
-    authorization: "b4cc6e60-7c2a-4c93-961f-3d990169c3ad",
-    "Content-Type": "application/json",
-  },
-});
+

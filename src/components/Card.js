@@ -1,5 +1,4 @@
-import { data } from "autoprefixer";
-import { api } from "./Api";
+import { api } from "../pages/index";
 
 export default class Card {
 

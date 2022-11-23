@@ -1,11 +1,12 @@
 import './index.css'
-import Card from '../components/Card.js';
-import FormValidator from '../components/FormValidator.js';
-import Section from '../components/Section.js';
-import Popup from '../components/Popup.js';
-import PopupWithImage from '../components/PopupWithImage.js';
-import PopupWithForm from '../components/PopupWithForm.js';
-import UserInfo from '../components/UserInfo.js'
+import Api from '../components/Api'
+import Card from '../components/Card';
+import FormValidator from '../components/FormValidator';
+import Section from '../components/Section';
+import Popup from '../components/Popup';
+import PopupWithImage from '../components/PopupWithImage';
+import PopupWithForm from '../components/PopupWithForm';
+import UserInfo from '../components/UserInfo'
 import {
   popupEditAvatar,
   popupDeleteCard,
@@ -18,8 +19,15 @@ import {
   cardAddButton,
   avatarEditButton,
   validationData
-} from '../components/constants.js'
-import {api} from '../components/Api.js'
+} from '../components/constants'
+
+export const api = new Api({
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-54",
+  headers: {
+    authorization: "b4cc6e60-7c2a-4c93-961f-3d990169c3ad",
+    "Content-Type": "application/json",
+  },
+});
 
 //загрузка профиля с сервера
 
