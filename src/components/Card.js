@@ -42,7 +42,7 @@ export default class Card {
   }
 
   //генерирование новой карточки
-  createCard() {
+  renderCard() {
     this._setEventListeners();
 
     this._element.querySelector(".element-place__name").textContent =

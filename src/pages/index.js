@@ -75,11 +75,12 @@ function submitCardForm(evt, data) {
     link: data.link,
   };
 
-  api.addNewCard(info).catch((err) => {
-    console.log(err);
-  });
-
-  popupCard.close();
+  api
+    .addNewCard(info)
+    .then(popupCard.close())
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function createCard(item, userId) {
@@ -91,7 +92,7 @@ function createCard(item, userId) {
     handleDeleteClick,
     handleLikeClick
   );
-  const cardElement = card.createCard();
+  const cardElement = card.renderCard();
   return cardElement;
 }
 
@@ -117,12 +118,11 @@ function submitPorfileForm(evt, data) {
     .editProfile(data)
     .then((data) => {
       userData.setUserInfo(data.name, data.about, data.avatar);
+      popupProfile.close();
     })
     .catch((err) => {
       console.log(err);
     });
-
-  popupProfile.close();
 }
 
 //открытие-закрытие попапа профиля
@@ -158,12 +158,11 @@ function submitAvatarForm(evt, data) {
     .editAvatar(data["place-link"])
     .then((data) => {
       userData.setUserInfo(data.name, data.about, data.avatar);
+      popupAvatar.close();
     })
     .catch((err) => {
       console.log(err);
     });
-
-  popupAvatar.close();
 }
 
 //наполнение зума картинки
