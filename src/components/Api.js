@@ -1,4 +1,4 @@
-import { api } from '../pages/index'
+import { api } from "../pages/index";
 
 export default class Api {
   constructor({ baseUrl, headers }) {
@@ -17,8 +17,7 @@ export default class Api {
   getProfile() {
     return fetch(this._baseUrlUser, {
       headers: this._headers,
-    })
-    .then((res) => this._checkRespondStatus(res))
+    }).then((res) => this._checkRespondStatus(res));
   }
 
   editProfile(data) {
@@ -27,9 +26,9 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
-        about: data.about
+        about: data.about,
       }),
-    }).then((res) => _checkRespondStatus(res))
+    }).then((res) => _checkRespondStatus(res));
   }
 
   editAvatar(data) {
@@ -40,14 +39,13 @@ export default class Api {
       body: JSON.stringify({
         avatar: data,
       }),
-    }).then((res) => this._checkRespondStatus(res))
+    }).then((res) => this._checkRespondStatus(res));
   }
 
   getInitialCards() {
     return fetch(this._baseUrlCards, {
       headers: this._headers,
-    })
-      .then((res) => this._checkRespondStatus(res))
+    }).then((res) => this._checkRespondStatus(res));
   }
 
   addNewCard(data) {
@@ -58,14 +56,14 @@ export default class Api {
         name: data.name,
         link: data.link,
       }),
-    }).then((res) => this._checkRespondStatus(res))
+    }).then((res) => this._checkRespondStatus(res));
   }
 
   removeCard(cardId) {
     return fetch(`${this._baseUrlCards}/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then((res) => this._checkRespondStatus(res))
+    }).then((res) => this._checkRespondStatus(res));
   }
 
   addLike(cardId, isLiked) {
@@ -78,8 +76,8 @@ export default class Api {
             data;
           })
         ),
-      }).then((res) => this._checkRespondStatus(res))
-    } 
+      }).then((res) => this._checkRespondStatus(res));
+    }
   }
 
   removeLike(cardId, isLiked) {
@@ -92,9 +90,7 @@ export default class Api {
             data;
           })
         ),
-      }).then((res) => this._checkRespondStatus(res))
+      }).then((res) => this._checkRespondStatus(res));
     }
   }
 }
-
-
