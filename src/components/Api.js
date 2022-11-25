@@ -1,4 +1,4 @@
-import { userData } from "../pages/index"
+import { api } from '../pages/index'
 
 export default class Api {
   constructor({ baseUrl, headers }) {
@@ -19,19 +19,6 @@ export default class Api {
       headers: this._headers,
     })
     .then((res) => this._checkRespondStatus(res))
-  }
-
-  getId() {
-    return fetch(this._baseUrlUser, {
-      headers: this._headers,
-    })
-      .then((res) => this._checkRespondStatus(res))
-      .then((data) => {
-        return data._id;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }
 
   editProfile(data) {
@@ -81,7 +68,7 @@ export default class Api {
     }).then((res) => this._checkRespondStatus(res))
   }
 
-  toggleLike(cardId, isLiked) {
+  addLike(cardId, isLiked) {
     if (isLiked.length < 2) {
       return fetch(`${this._baseUrlCards}/${cardId}/likes/`, {
         method: "PUT",
@@ -91,8 +78,12 @@ export default class Api {
             data;
           })
         ),
-      });
-    } else {
+      }).then((res) => this._checkRespondStatus(res))
+    } 
+  }
+
+  removeLike(cardId, isLiked) {
+    if (isLiked.length > 1) {
       return fetch(`${this._baseUrlCards}/${cardId}/likes/`, {
         method: "DELETE",
         headers: this._headers,
@@ -101,7 +92,7 @@ export default class Api {
             data;
           })
         ),
-      }).then((res) => res.json());
+      }).then((res) => this._checkRespondStatus(res))
     }
   }
 }

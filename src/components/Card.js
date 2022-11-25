@@ -2,17 +2,19 @@ import { api } from "../pages/index";
 
 export default class Card {
 
-  //на вход массив карточек, образец разметки, обработчик клика зума
-  constructor (data, templateSelector, handleImageClick, handleDeleteClick) {
+  //на вход массив карточек, образец разметки
+  constructor (data, userId, templateSelector, handleImageClick, handleDeleteClick, handleLikeClick) {
     this._name = data.name;
     this._link = data.link;
     this._like = data.likes;
     this._id = data.owner._id;
     this._likeId = data.likes._id;
     this._cardId = data._id;
+    this._userId = userId;
     this._card = templateSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteClick = handleDeleteClick;
+    this._handleLikeClick = handleLikeClick;
     this._element = this._getTemplate();
     this._cardImage = this._element.querySelector('.element__image');
     this._likeButton = this._element.querySelector('.element-place__like-button');
@@ -41,24 +43,14 @@ export default class Card {
     this._cardImage.alt = this._name;
     this._likes.textContent = this._like.length;
 
-    api.getId()
-    .then(data => {
-    if (this._id === data) {
+
+    if (this._id === this._userId) {
       this._deleteButton.classList.add('element__delete-button_active')
     }
-    if(this._like.some(item => item._id === data)) {
+    if(this._like.some(item => item._id === this._userId)) {
       this._likeButton.classList.add('element-place__like-button_active')
-    }})
+    }
     return this._element;
-  }
-
-  //обработчик клика лайк
-  _handleLikeClick(id, like) {
-    api.toggleLike(id, like);
-    this._likeButton.classList.toggle('element-place__like-button_active');
-    if(this._likeButton.classList.contains('element-place__like-button_active')){
-    this._likes.textContent -= "-1";}
-    else{this._likes.textContent -= "1";}
   }
 
   //навешивание слушателей
