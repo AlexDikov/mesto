@@ -5,18 +5,11 @@ export default class Section {
     this._elementContainer = document.querySelector(elementContainer);
   }
 
-  createSection() {
+  renderItems() {
     this._renderedItems.forEach((item) => {
       const renderedCard = this._renderer(item);
       this.addItem(renderedCard);
     });
-  }
-
-  createElement() {
-    (item) => {
-      const renderedCard = this._renderer(item);
-      this.addItem(renderedCard);
-    };
   }
 
   addItem(element) {

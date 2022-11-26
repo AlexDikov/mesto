@@ -58,11 +58,34 @@ api
       ".elements"
     );
 
-    section.createSection();
+    section.renderItems();
   })
   .catch((err) => {
     console.log(err);
   });
+
+//создание новой карточки
+function createCard(item, userId) {
+  const card = new Card(
+    item,
+    userId,
+    "#card",
+    handleImageClick,
+    handleDeleteClick,
+    handleLikeClick
+  );
+  const cardElement = card.renderCard();
+  return cardElement;
+}
+//инстанс попапа доюавления карточки
+const popupCard = new PopupWithForm(popupAddCard, submitCardForm);
+popupCard.setEventListeners();
+
+//открытие-закрытие попапа добавления карточки
+function openPopupAddCard() {
+  cardFormValidator.resetValidation();
+  popupCard.open();
+}
 
 //отправка формы карточки и создание новой
 function submitCardForm(evt, data) {
@@ -83,30 +106,20 @@ function submitCardForm(evt, data) {
     });
 }
 
-function createCard(item, userId) {
-  const card = new Card(
-    item,
-    userId,
-    "#card",
-    handleImageClick,
-    handleDeleteClick,
-    handleLikeClick
-  );
-  const cardElement = card.renderCard();
-  return cardElement;
-}
-
+//инстанс попапа профиля
 const popupProfile = new PopupWithForm(popupEditProfile, submitPorfileForm);
-const popupCard = new PopupWithForm(popupAddCard, submitCardForm);
-const popupZoom = new PopupWithImage(popupZoomPic);
-const popupAvatar = new PopupWithForm(popupEditAvatar, submitAvatarForm);
-const popupDeleteConfirm = new PopupConfirmation(popupDeleteCard);
-
 popupProfile.setEventListeners();
-popupCard.setEventListeners();
-popupZoom.setEventListeners();
-popupAvatar.setEventListeners();
-popupDeleteConfirm.setEventListeners();
+
+//открытие-закрытие попапа профиля
+function openPopupEditProfile() {
+  const userInfo = userData.getUserInfo();
+
+  nameInput.value = userInfo.name;
+  jobInput.value = userInfo.job;
+
+  profileFormValidator.resetValidation();
+  popupProfile.open();
+}
 
 //отправка формы профиля
 function submitPorfileForm(evt, data) {
@@ -125,22 +138,8 @@ function submitPorfileForm(evt, data) {
     });
 }
 
-//открытие-закрытие попапа профиля
-function openPopupEditProfile() {
-  const userInfo = userData.getUserInfo();
-
-  nameInput.value = userInfo.name;
-  jobInput.value = userInfo.job;
-
-  profileFormValidator.resetValidation();
-  popupProfile.open();
-}
-
-//открытие-закрытие попапа добавления карточки
-function openPopupAddCard() {
-  cardFormValidator.resetValidation();
-  popupCard.open();
-}
+const popupAvatar = new PopupWithForm(popupEditAvatar, submitAvatarForm);
+popupAvatar.setEventListeners();
 
 //открытие-закрытие попапа аватара
 function openPopupEditAvatar() {
@@ -165,6 +164,9 @@ function submitAvatarForm(evt, data) {
     });
 }
 
+const popupZoom = new PopupWithImage(popupZoomPic);
+popupZoom.setEventListeners();
+
 //наполнение зума картинки
 function handleImageClick(name, link) {
   popupZoom.open(name, link);
@@ -183,6 +185,9 @@ function handleDeleteClick(id) {
     })
   );
 }
+
+const popupDeleteConfirm = new PopupConfirmation(popupDeleteCard);
+popupDeleteConfirm.setEventListeners();
 
 //обработчик клика лайк
 function handleLikeClick(id, like) {
