@@ -1,6 +1,6 @@
 .popup__input-error_first {
   position: absolute;
-  top: 143px;
+  top: 180px;
   left: 36px;
   line-height: 15px;
   font-size: 12px;
@@ -9,7 +9,7 @@
 
 @media screen and (max-width:650px) {
   .popup__input-error_first {
-    top: 150px;
+    top: 192px;
     left: 22px;
   }
 }

@@ -44,13 +44,30 @@ api
     console.log(err);
   });
 
+let section;
+
+//создание новой карточки
+function createCard(item, userId) {
+  const card = new Card(
+    item,
+    userId,
+    "#card",
+    handleImageClick,
+    handleDeleteClick,
+    handleLikeClick
+  );
+  const cardElement = card.renderCard();
+
+  section.addCard(cardElement);
+}
+
 //загрузка массива карточек с сервера
 
 api
   .getInitialCards()
   .then((data) => {
     const userId = userData.getUserInfo().id;
-    const section = new Section(
+    section = new Section(
       {
         items: data.reverse(),
         renderer: (item) => createCard(item, userId),
@@ -64,19 +81,6 @@ api
     console.log(err);
   });
 
-//создание новой карточки
-function createCard(item, userId) {
-  const card = new Card(
-    item,
-    userId,
-    "#card",
-    handleImageClick,
-    handleDeleteClick,
-    handleLikeClick
-  );
-  const cardElement = card.renderCard();
-  return cardElement;
-}
 //инстанс попапа доюавления карточки
 const popupCard = new PopupWithForm(popupAddCard, submitCardForm);
 popupCard.setEventListeners();
@@ -100,7 +104,11 @@ function submitCardForm(evt, data) {
 
   api
     .addNewCard(info)
-    .then(popupCard.close())
+    .then((res) => {
+      const userId = userData.getUserInfo().id;
+      createCard(res, userId);
+    })
+    .then(popupCard.refreshSubmit(), popupCard.close())
     .catch((err) => {
       console.log(err);
     });
@@ -131,6 +139,7 @@ function submitPorfileForm(evt, data) {
     .editProfile(data)
     .then((data) => {
       userData.setUserInfo(data.name, data.about, data.avatar);
+      popupProfile.refreshSubmit();
       popupProfile.close();
     })
     .catch((err) => {
@@ -157,6 +166,7 @@ function submitAvatarForm(evt, data) {
     .editAvatar(data["place-link"])
     .then((data) => {
       userData.setUserInfo(data.name, data.about, data.avatar);
+      popupAvatar.refreshSubmit();
       popupAvatar.close();
     })
     .catch((err) => {
@@ -174,20 +184,19 @@ function handleImageClick(name, link) {
 
 //обработчик клика удалить
 function handleDeleteClick(id) {
-  popupDeleteConfirm.open();
-
-  const deleteForm = document.getElementById("confirmation");
-
-  deleteForm.addEventListener(
-    "submit",
-    api.removeCard(id).catch((err) => {
-      console.log(err);
-    })
+  const popupDeleteConfirm = new PopupConfirmation(popupDeleteCard, () =>
+    api
+      .removeCard(id)
+      .then(this._element.remove())
+      .then(popupDeleteConfirm.close())
+      .catch((err) => {
+        console.log(err);
+      })
   );
-}
+  popupDeleteConfirm.setEventListeners();
 
-const popupDeleteConfirm = new PopupConfirmation(popupDeleteCard);
-popupDeleteConfirm.setEventListeners();
+  popupDeleteConfirm.open();
+}
 
 //обработчик клика лайк
 function handleLikeClick(id, like) {

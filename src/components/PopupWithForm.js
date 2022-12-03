@@ -22,6 +22,10 @@ export default class PopupWithForm extends Popup {
     this._saveButton.textContent = "Сохранение...";
   }
 
+  refreshSubmit() {
+    this._saveButton.textContent = "Сохраненить";
+  }
+
   close() {
     super.close();
     this._form.reset();
