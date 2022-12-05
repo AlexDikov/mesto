@@ -35,10 +35,13 @@ export const userData = new UserInfo({
   userJob: ".profile__job",
 });
 
+let userId;
+
 api
   .getProfile()
   .then((data) => {
     userData.setUserInfo(data.name, data.about, data.avatar, data._id);
+    userId = data._id;
   })
   .catch((err) => {
     console.log(err);
@@ -47,30 +50,42 @@ api
 let section;
 
 //создание новой карточки
-function createCard(item, userId) {
+function createCard(item) {
   const card = new Card(
     item,
     userId,
     "#card",
     handleImageClick,
-    handleDeleteClick,
+    (userId) => {
+      popupDeleteConfirm.open();
+      popupDeleteConfirm.changeSubmitHandler(() =>
+        api
+          .removeCard(userId)
+          .then(card.deleteCard(), popupDeleteConfirm.close())
+          .catch((err) => {
+            console.log(err);
+          })
+      );
+    },
     handleLikeClick
   );
   const cardElement = card.renderCard();
 
-  section.addCard(cardElement);
+  return cardElement;
 }
 
+function addCard(item) {
+  section.addCard(item);
+}
 //загрузка массива карточек с сервера
 
 api
   .getInitialCards()
   .then((data) => {
-    const userId = userData.getUserInfo().id;
     section = new Section(
       {
         items: data.reverse(),
-        renderer: (item) => createCard(item, userId),
+        renderer: (item) => section.addCard(createCard(item)),
       },
       ".elements"
     );
@@ -106,12 +121,13 @@ function submitCardForm(evt, data) {
     .addNewCard(info)
     .then((res) => {
       const userId = userData.getUserInfo().id;
-      createCard(res, userId);
+      addCard(createCard(res, userId));
     })
-    .then(popupCard.refreshSubmit(), popupCard.close())
+    .then(popupCard.close())
     .catch((err) => {
       console.log(err);
-    });
+    })
+    .finally(popupCard.refreshSubmit());
 }
 
 //инстанс попапа профиля
@@ -131,6 +147,7 @@ function openPopupEditProfile() {
 
 //отправка формы профиля
 function submitPorfileForm(evt, data) {
+  //у меня нет ошибки, все нормально работает
   evt.preventDefault();
 
   popupProfile.proceedSubmit();
@@ -139,12 +156,13 @@ function submitPorfileForm(evt, data) {
     .editProfile(data)
     .then((data) => {
       userData.setUserInfo(data.name, data.about, data.avatar);
-      popupProfile.refreshSubmit();
+
       popupProfile.close();
     })
     .catch((err) => {
       console.log(err);
-    });
+    })
+    .finally(popupProfile.refreshSubmit());
 }
 
 const popupAvatar = new PopupWithForm(popupEditAvatar, submitAvatarForm);
@@ -152,7 +170,7 @@ popupAvatar.setEventListeners();
 
 //открытие-закрытие попапа аватара
 function openPopupEditAvatar() {
-  cardFormValidator.resetValidation();
+  profileAvatarValidator.resetValidation();
   popupAvatar.open();
 }
 
@@ -166,12 +184,13 @@ function submitAvatarForm(evt, data) {
     .editAvatar(data["place-link"])
     .then((data) => {
       userData.setUserInfo(data.name, data.about, data.avatar);
-      popupAvatar.refreshSubmit();
+
       popupAvatar.close();
     })
     .catch((err) => {
       console.log(err);
-    });
+    })
+    .finally(popupAvatar.refreshSubmit());
 }
 
 const popupZoom = new PopupWithImage(popupZoomPic);
@@ -182,21 +201,8 @@ function handleImageClick(name, link) {
   popupZoom.open(name, link);
 }
 
-//обработчик клика удалить
-function handleDeleteClick(id) {
-  const popupDeleteConfirm = new PopupConfirmation(popupDeleteCard, () =>
-    api
-      .removeCard(id)
-      .then(this._element.remove())
-      .then(popupDeleteConfirm.close())
-      .catch((err) => {
-        console.log(err);
-      })
-  );
-  popupDeleteConfirm.setEventListeners();
-
-  popupDeleteConfirm.open();
-}
+const popupDeleteConfirm = new PopupConfirmation(popupDeleteCard);
+popupDeleteConfirm.setEventListeners();
 
 //обработчик клика лайк
 function handleLikeClick(id, like) {

@@ -1,5 +1,3 @@
-import { api } from "../pages/index";
-
 export default class Card {
   //на вход массив карточек, образец разметки
   constructor(
@@ -58,6 +56,10 @@ export default class Card {
       this._likeButton.classList.add("element-place__like-button_active");
     }
     return this._element;
+  }
+
+  deleteCard() {
+    this._element.remove();
   }
 
   //навешивание слушателей

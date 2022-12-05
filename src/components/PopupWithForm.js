@@ -23,7 +23,7 @@ export default class PopupWithForm extends Popup {
   }
 
   refreshSubmit() {
-    this._saveButton.textContent = "Сохраненить";
+    this._saveButton.textContent = "Сохранить";
   }
 
   close() {

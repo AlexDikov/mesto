@@ -4,14 +4,17 @@ export default class PopupConfirmation extends Popup {
     super(popupElement);
     this._handleFormSubmit = handleFormSubmit;
     this._popupElement = popupElement;
+    this._form = this._popupElement.querySelector(".popup__form");
+  }
+
+  changeSubmitHandler(newSubmitHandler) {
+    this._handleFormSubmit = newSubmitHandler;
   }
 
   setEventListeners() {
     super.setEventListeners();
 
-    const deleteForm = document.getElementById("confirmation");
-
-    deleteForm.addEventListener("submit", (evt) => {
+    this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
       this._handleFormSubmit();
     });

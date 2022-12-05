@@ -28,7 +28,7 @@ export default class Api {
         name: data.name,
         about: data.about,
       }),
-    }).then((res) => _checkRespondStatus(res));
+    }).then((res) => this._checkRespondStatus(res));
   }
 
   editAvatar(data) {
