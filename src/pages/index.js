@@ -37,17 +37,30 @@ export const userData = new UserInfo({
 
 let userId;
 
-api
-  .getProfile()
-  .then((data) => {
+api.getProfile();
+
+//загрузка массива карточек с сервера
+let section;
+
+api.getInitialCards();
+
+Promise.all([api.getInitialCards(), api.getProfile()])
+  .then(([cards, data]) => {
     userData.setUserInfo(data.name, data.about, data.avatar, data._id);
     userId = data._id;
+    section = new Section(
+      {
+        items: cards.reverse(),
+        renderer: (item) => section.addCard(createCard(item)),
+      },
+      ".elements"
+    );
+
+    section.renderItems();
   })
   .catch((err) => {
     console.log(err);
   });
-
-let section;
 
 //создание новой карточки
 function createCard(item) {
@@ -77,24 +90,6 @@ function createCard(item) {
 function addCard(item) {
   section.addCard(item);
 }
-//загрузка массива карточек с сервера
-
-api
-  .getInitialCards()
-  .then((data) => {
-    section = new Section(
-      {
-        items: data.reverse(),
-        renderer: (item) => section.addCard(createCard(item)),
-      },
-      ".elements"
-    );
-
-    section.renderItems();
-  })
-  .catch((err) => {
-    console.log(err);
-  });
 
 //инстанс попапа доюавления карточки
 const popupCard = new PopupWithForm(popupAddCard, submitCardForm);
